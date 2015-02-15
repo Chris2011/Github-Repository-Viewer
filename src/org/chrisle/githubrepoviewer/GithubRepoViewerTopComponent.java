@@ -8,6 +8,7 @@ package org.chrisle.githubrepoviewer;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 
@@ -25,15 +26,18 @@ import org.openide.util.NbBundle.Messages;
 )
 @TopComponent.Registration(mode = "explorer", openAtStartup = false)
 @ActionID(category = "Window", id = "org.chrisle.githubrepoviewer.GithubRepoViewerTopComponent")
-@ActionReference(path = "Menu/Window" /*, position = 333 */)
+@ActionReferences({
+    @ActionReference(path = "Menu/Window" /*, position = 333 */),
+    @ActionReference(path = "Shortcuts", name = "DO-G DO-R")
+})
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_GithubRepoViewerAction",
         preferredID = "GithubRepoViewerTopComponent"
 )
 @Messages({
-    "CTL_GithubRepoViewerAction=GithubRepoViewer",
-    "CTL_GithubRepoViewerTopComponent=GithubRepoViewer Window",
-    "HINT_GithubRepoViewerTopComponent=This is a GithubRepoViewer window"
+    "CTL_GithubRepoViewerAction=Github Repository Viewer",
+    "CTL_GithubRepoViewerTopComponent=Repositories",
+    "HINT_GithubRepoViewerTopComponent=This is a Repository Viewer"
 })
 public final class GithubRepoViewerTopComponent extends TopComponent {
 
