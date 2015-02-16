@@ -36,7 +36,7 @@ import org.openide.util.NbBundle.Messages;
 )
 @Messages({
     "CTL_GithubRepoViewerAction=Github Repository Viewer",
-    "CTL_GithubRepoViewerTopComponent=Repositories",
+    "CTL_GithubRepoViewerTopComponent=Github Repository Viewer",
     "HINT_GithubRepoViewerTopComponent=This is a Repository Viewer"
 })
 public final class GithubRepoViewerTopComponent extends TopComponent {
