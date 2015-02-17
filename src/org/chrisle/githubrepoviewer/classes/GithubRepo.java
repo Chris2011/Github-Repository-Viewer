@@ -22,4 +22,7 @@ public class GithubRepo {
     public DefaultTreeModel getRepositories() {
         return new DefaultTreeModel(_treeNode);
     }
+
+    public void addTreeNode(Object host) {
+    }
 }

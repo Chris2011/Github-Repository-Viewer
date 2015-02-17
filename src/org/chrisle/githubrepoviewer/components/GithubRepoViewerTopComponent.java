@@ -7,6 +7,7 @@ package org.chrisle.githubrepoviewer.components;
 
 import javax.swing.JWindow;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import org.chrisle.githubrepoviewer.classes.GithubRepo;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
@@ -102,7 +103,7 @@ public final class GithubRepoViewerTopComponent extends TopComponent {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addHost;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTree repositoryTree;
+    private static javax.swing.JTree repositoryTree;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
@@ -110,6 +111,10 @@ public final class GithubRepoViewerTopComponent extends TopComponent {
 
         _githubRepo.fillTreeNodeModel();
         repositoryTree.setModel(_githubRepo.getRepositories());
+    }
+    
+    public static void fillRepositoryTree(DefaultTreeModel repositories) {
+        repositoryTree.setModel(repositories);
     }
 
     @Override
