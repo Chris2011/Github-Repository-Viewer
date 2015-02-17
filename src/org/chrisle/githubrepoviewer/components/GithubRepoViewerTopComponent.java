@@ -5,6 +5,7 @@
  */
 package org.chrisle.githubrepoviewer.components;
 
+import javax.swing.JWindow;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.chrisle.githubrepoviewer.classes.GithubRepo;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -42,12 +43,12 @@ import org.openide.util.NbBundle.Messages;
     "HINT_GithubRepoViewerTopComponent=This is a Repository Viewer"
 })
 public final class GithubRepoViewerTopComponent extends TopComponent {
+    private GithubRepo _githubRepo;
 
     public GithubRepoViewerTopComponent() {
         initComponents();
         setName(Bundle.CTL_GithubRepoViewerTopComponent());
         setToolTipText(Bundle.HINT_GithubRepoViewerTopComponent());
-
     }
 
     /**
@@ -60,8 +61,16 @@ public final class GithubRepoViewerTopComponent extends TopComponent {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         repositoryTree = new javax.swing.JTree();
+        addHost = new javax.swing.JButton();
 
         jScrollPane1.setViewportView(repositoryTree);
+
+        org.openide.awt.Mnemonics.setLocalizedText(addHost, org.openide.util.NbBundle.getMessage(GithubRepoViewerTopComponent.class, "GithubRepoViewerTopComponent.addHost.text")); // NOI18N
+        addHost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addHostActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -69,28 +78,38 @@ public final class GithubRepoViewerTopComponent extends TopComponent {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(addHost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                .addComponent(addHost)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void addHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostActionPerformed
+        AddHostDialog hostsDialog = new AddHostDialog(null, true);
+        hostsDialog.setVisible(true);
+    }//GEN-LAST:event_addHostActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addHost;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTree repositoryTree;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
-        GithubRepo githubRepo = new GithubRepo(new DefaultMutableTreeNode("Your github repositories"));
+        _githubRepo = new GithubRepo(new DefaultMutableTreeNode("No hosts available"));
 
-        githubRepo.fillTreeNodeModel();
-        repositoryTree.setModel(githubRepo.getRepositories());
+        _githubRepo.fillTreeNodeModel();
+        repositoryTree.setModel(_githubRepo.getRepositories());
     }
 
     @Override
