@@ -16,10 +16,7 @@ public class GithubRepo {
     }
 
     public void fillTreeNodeModel() {
-        _treeNode.add(new DefaultMutableTreeNode("Repo1"));
-        _treeNode.add(new DefaultMutableTreeNode("Repo2"));
-        _treeNode.add(new DefaultMutableTreeNode("Repo3"));
-        _treeNode.add(new DefaultMutableTreeNode("Repo4"));
+        
     }
 
     public DefaultTreeModel getRepositories() {
