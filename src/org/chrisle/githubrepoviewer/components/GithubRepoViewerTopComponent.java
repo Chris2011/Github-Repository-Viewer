@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.chrisle.githubrepoviewer;
+package org.chrisle.githubrepoviewer.components;
 
+import javax.swing.tree.DefaultMutableTreeNode;
+import org.chrisle.githubrepoviewer.classes.GithubRepo;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -16,23 +18,23 @@ import org.openide.util.NbBundle.Messages;
  * Top component which displays something.
  */
 @ConvertAsProperties(
-        dtd = "-//org.chrisle.githubrepoviewer//GithubRepoViewer//EN",
+        dtd = "-//org.chrisle.githubrepoviewer.components//GithubRepoViewer//EN",
         autostore = false
 )
 @TopComponent.Description(
         preferredID = "GithubRepoViewerTopComponent",
-        iconBase = "org/chrisle/githubrepoviewer/github-cat.png",
+        iconBase = "org/chrisle/githubrepoviewer/github.png",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
 @TopComponent.Registration(mode = "explorer", openAtStartup = false)
-@ActionID(category = "Window", id = "org.chrisle.githubrepoviewer.GithubRepoViewerTopComponent")
+@ActionID(category = "Window", id = "org.chrisle.githubrepoviewer.components.GithubRepoViewerTopComponent")
 @ActionReferences({
     @ActionReference(path = "Menu/Window" /*, position = 333 */),
     @ActionReference(path = "Shortcuts", name = "DO-G DO-R")
 })
 @TopComponent.OpenActionRegistration(
         displayName = "#CTL_GithubRepoViewerAction",
-        preferredID = "GithubRepoViewerTopComponent"
+        preferredID = "GithubRepoViewerToCpomponent"
 )
 @Messages({
     "CTL_GithubRepoViewerAction=Github Repository Viewer",
@@ -56,23 +58,39 @@ public final class GithubRepoViewerTopComponent extends TopComponent {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        repositoryTree = new javax.swing.JTree();
+
+        jScrollPane1.setViewportView(repositoryTree);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTree repositoryTree;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
-        // TODO add custom code on component opening
+        GithubRepo githubRepo = new GithubRepo(new DefaultMutableTreeNode("Your github repositories"));
+
+        githubRepo.fillTreeNodeModel();
+        repositoryTree.setModel(githubRepo.getRepositories());
     }
 
     @Override
