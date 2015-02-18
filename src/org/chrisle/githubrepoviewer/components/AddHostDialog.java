@@ -37,11 +37,15 @@ public class AddHostDialog extends javax.swing.JDialog {
         password = new javax.swing.JPasswordField();
         addHostBtn = new javax.swing.JButton();
         _hint = new javax.swing.JLabel();
+        _hostSelectBox = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.title")); // NOI18N
         setName("hostDialog"); // NOI18N
+        setResizable(false);
 
-        jLabel1.setDisplayedMnemonic('U');
+        jLabel1.setDisplayedMnemonic('u');
         jLabel1.setLabelFor(username);
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.jLabel1.text")); // NOI18N
 
@@ -65,6 +69,12 @@ public class AddHostDialog extends javax.swing.JDialog {
         _hint.setFont(new java.awt.Font("Dialog", 2, 10)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(_hint, org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog._hint.text")); // NOI18N
 
+        _hostSelectBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        _hostSelectBox.setMinimumSize(new java.awt.Dimension(56, 25));
+        _hostSelectBox.setPreferredSize(new java.awt.Dimension(56, 25));
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.jLabel3.text")); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -75,32 +85,46 @@ public class AddHostDialog extends javax.swing.JDialog {
                     .addComponent(addHostBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(_hint)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(46, 46, 46)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(password)
-                                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(_hint))
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(46, 46, 46)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(_hostSelectBox, 0, 109, Short.MAX_VALUE)
+                                            .addComponent(password)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(_hostSelectBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2)))
                 .addGap(18, 18, 18)
                 .addComponent(addHostBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
                 .addComponent(_hint)
                 .addContainerGap())
         );
@@ -110,11 +134,9 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     private void addHostBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostBtnActionPerformed
         if (!username.getText().isEmpty() && password.getPassword().length > 0) {
-            GithubRepo newHost = new GithubRepo(new DefaultMutableTreeNode(String.format("Github (%s)", username.getText())));
+//            GithubRepo newHost = new GithubRepo();
 
-            newHost.addTreeNode(null);
-            
-            GithubRepoViewerTopComponent.fillRepositoryTree(newHost.getRepositories());
+            GithubRepoViewerTopComponent.addTreeNode(new DefaultMutableTreeNode(String.format("Github (%s)", username.getText())));
 
             this.setVisible(false);
         }
@@ -165,9 +187,11 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel _hint;
+    private javax.swing.JComboBox _hostSelectBox;
     private javax.swing.JButton addHostBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField password;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables

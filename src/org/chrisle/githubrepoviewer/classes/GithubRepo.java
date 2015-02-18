@@ -1,7 +1,8 @@
 package org.chrisle.githubrepoviewer.classes;
 
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeModel;
 
 /**
  *
@@ -9,9 +10,9 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class GithubRepo {
 
-    private final DefaultMutableTreeNode _treeNode;
+    private final MutableTreeNode _treeNode;
     
-    public GithubRepo(DefaultMutableTreeNode treeNode) {
+    public GithubRepo(MutableTreeNode treeNode) {
         _treeNode = treeNode;
     }
 
@@ -23,6 +24,6 @@ public class GithubRepo {
         return new DefaultTreeModel(_treeNode);
     }
 
-    public void addTreeNode(Object host) {
+    public void addTreeNode(MutableTreeNode host) {
     }
 }
