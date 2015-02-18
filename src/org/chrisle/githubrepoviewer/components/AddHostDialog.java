@@ -13,13 +13,20 @@ import org.chrisle.githubrepoviewer.classes.GithubRepo;
  * @author chrl
  */
 public class AddHostDialog extends javax.swing.JDialog {
-
     /**
      * Creates new form HostsDialog
      */
     public AddHostDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+
+        _hostSelectBox.removeAllItems();
+        fillHostSelectBox();
+    }
+    
+    private void fillHostSelectBox() {
+        _hostSelectBox.addItem("Github");
+        _hostSelectBox.addItem("Bitbucket");
     }
 
     /**
@@ -116,12 +123,10 @@ public class AddHostDialog extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(addHostBtn)
                 .addGap(55, 55, 55)
@@ -134,8 +139,6 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     private void addHostBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostBtnActionPerformed
         if (!username.getText().isEmpty() && password.getPassword().length > 0) {
-//            GithubRepo newHost = new GithubRepo();
-
             GithubRepoViewerTopComponent.addTreeNode(new DefaultMutableTreeNode(String.format("Github (%s)", username.getText())));
 
             this.setVisible(false);
