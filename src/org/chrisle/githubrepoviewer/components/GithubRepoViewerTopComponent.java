@@ -18,7 +18,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
-import org.chrisle.githubrepoviewer.classes.GithubRepo;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -54,8 +53,6 @@ import org.openide.util.NbBundle.Messages;
     "HINT_GithubRepoViewerTopComponent=This is a Repository Viewer"
 })
 public final class GithubRepoViewerTopComponent extends TopComponent {
-    private GithubRepo _githubRepo;
-
     public GithubRepoViewerTopComponent() {
         _hostsRootNode = new DefaultMutableTreeNode("Hosts - (No hosts added)");
         _treeNodePopup = new JPopupMenu();
