@@ -11,4 +11,5 @@ public interface IHost {
     public List<String> getBranches();
     public List<String> getTags();
     public Boolean isPrivate();
+    public String getHostName();
 }
