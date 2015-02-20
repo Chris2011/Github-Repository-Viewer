@@ -12,4 +12,5 @@ public interface IHost {
     public List<String> getTags();
     public Boolean isPrivate();
     public String getHostName();
+    public String getHostIcon();
 }
