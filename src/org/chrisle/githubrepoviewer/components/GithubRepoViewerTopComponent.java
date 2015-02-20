@@ -11,10 +11,12 @@ import java.awt.event.MouseEvent;
 import javafx.scene.input.MouseButton;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.JWindow;
 import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
@@ -37,7 +39,7 @@ import org.openide.util.NbBundle.Messages;
         iconBase = "org/chrisle/githubrepoviewer/github.png",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
-@TopComponent.Registration(mode = "explorer", openAtStartup = false)
+@TopComponent.Registration(mode = "right", openAtStartup = false)
 @ActionID(category = "Window", id = "org.chrisle.githubrepoviewer.components.GithubRepoViewerTopComponent")
 @ActionReferences({
     @ActionReference(path = "Menu/Window" /*, position = 333 */),
@@ -188,6 +190,13 @@ public final class GithubRepoViewerTopComponent extends TopComponent {
       }
 
     public static void addTreeNode(MutableTreeNode host) {
+        IconCellRenderer renderer = new IconCellRenderer();
+        _hostTree.setCellRenderer(renderer); 
+
+        IconCellEditor editor = new IconCellEditor(_hostTree);
+        _hostTree.setCellEditor(editor);
+        _hostTree.setInvokesStopCellEditing(true);
+
         _hostsRootNode.add(host);
         _hostsRootNode.setUserObject("Hosts (" + _hostsRootNode.getChildCount() + ")");
 

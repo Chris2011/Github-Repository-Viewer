@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.ComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.event.ListDataListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.chrisle.githubrepoviewer.hosts.Bitbucket;
@@ -162,8 +164,10 @@ public class AddHostDialog extends javax.swing.JDialog {
             Object selectedHost = _hostSelectBox.getSelectedItem();
             _selectedHost = hosts.get(selectedHost);
 
-            GithubRepoViewerTopComponent.addTreeNode(new DefaultMutableTreeNode(String.format("%s (%s)", _selectedHost.getHostName(), username.getText())));
+            IconData hostIcon = new IconData(new ImageIcon("org/chrisle/githubrepoviewer/" + _selectedHost.getHostIcon()), String.format("%s (%s)", _selectedHost.getHostName(), username.getText()));
+            DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
 
+            GithubRepoViewerTopComponent.addTreeNode(defaultMutableTreeNode);
             this.setVisible(false);
         }
     }//GEN-LAST:event_addHostBtnActionPerformed
