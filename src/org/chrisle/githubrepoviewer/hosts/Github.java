@@ -40,4 +40,9 @@ public class Github implements IHost {
     public String getHostName() {
         return _hostName;
     }
+
+    @Override
+    public String getHostIcon() {
+        return "github.png";
+    }
 }

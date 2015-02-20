@@ -37,5 +37,9 @@ public class Bitbucket implements IHost {
     public String getHostName() {
         return _hostName;
     }
-    
+
+    @Override
+    public String getHostIcon() {
+        return "bitbucket.png";
+    }
 }
