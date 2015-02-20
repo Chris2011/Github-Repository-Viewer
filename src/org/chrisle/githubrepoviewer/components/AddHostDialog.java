@@ -5,13 +5,25 @@
  */
 package org.chrisle.githubrepoviewer.components;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.ComboBoxModel;
+import javax.swing.event.ListDataListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import org.chrisle.githubrepoviewer.hosts.Bitbucket;
+import org.chrisle.githubrepoviewer.hosts.Github;
+import org.chrisle.githubrepoviewer.hosts.IHost;
 
 /**
  *
  * @author chrl
  */
 public class AddHostDialog extends javax.swing.JDialog {
+    private Map<String, IHost> hosts;
+    private IHost _selectedHost;
+
     /**
      * Creates new form HostsDialog
      */
@@ -19,13 +31,22 @@ public class AddHostDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
 
+        hosts = new HashMap<String, IHost>() {{
+            IHost github = new Github("Github");
+            IHost bitbucket = new Bitbucket("Bitbucket");
+
+            put(github.getHostName(), github);
+            put(bitbucket.getHostName(), bitbucket);
+        }};
+
         _hostSelectBox.removeAllItems();
         fillHostSelectBox();
     }
-    
+
     private void fillHostSelectBox() {
-        _hostSelectBox.addItem("Github");
-        _hostSelectBox.addItem("Bitbucket");
+        for (String host : hosts.keySet()) {
+            _hostSelectBox.addItem(host);
+        }
     }
 
     /**
@@ -138,7 +159,10 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     private void addHostBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostBtnActionPerformed
         if (!username.getText().isEmpty() && password.getPassword().length > 0) {
-            GithubRepoViewerTopComponent.addTreeNode(new DefaultMutableTreeNode(String.format("Github (%s)", username.getText())));
+            Object selectedHost = _hostSelectBox.getSelectedItem();
+            _selectedHost = hosts.get(selectedHost);
+
+            GithubRepoViewerTopComponent.addTreeNode(new DefaultMutableTreeNode(String.format("%s (%s)", _selectedHost.getHostName(), username.getText())));
 
             this.setVisible(false);
         }
