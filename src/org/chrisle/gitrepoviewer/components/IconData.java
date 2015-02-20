@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.chrisle.githubrepoviewer.components;
+package org.chrisle.gitrepoviewer.components;
 
 import javax.swing.Icon;
 

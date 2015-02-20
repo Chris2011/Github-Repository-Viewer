@@ -1,4 +1,4 @@
-package org.chrisle.githubrepoviewer.hosts;
+package org.chrisle.gitrepoviewer.hosts;
 
 import java.util.List;
 

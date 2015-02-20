@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.chrisle.githubrepoviewer.components;
+package org.chrisle.gitrepoviewer.components;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +14,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.event.ListDataListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.chrisle.githubrepoviewer.hosts.Bitbucket;
-import org.chrisle.githubrepoviewer.hosts.Github;
-import org.chrisle.githubrepoviewer.hosts.IHost;
+import org.chrisle.gitrepoviewer.hosts.Bitbucket;
+import org.chrisle.gitrepoviewer.hosts.Github;
+import org.chrisle.gitrepoviewer.hosts.IHost;
 
 /**
  *
@@ -164,10 +164,10 @@ public class AddHostDialog extends javax.swing.JDialog {
             Object selectedHost = _hostSelectBox.getSelectedItem();
             _selectedHost = hosts.get(selectedHost);
 
-            IconData hostIcon = new IconData(new ImageIcon("org/chrisle/githubrepoviewer/" + _selectedHost.getHostIcon()), String.format("%s (%s)", _selectedHost.getHostName(), username.getText()));
+            IconData hostIcon = new IconData(new ImageIcon("org/chrisle/gitrepoviewer/" + _selectedHost.getHostIcon()), String.format("%s (%s)", _selectedHost.getHostName(), username.getText()));
             DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
 
-            GithubRepoViewerTopComponent.addTreeNode(defaultMutableTreeNode);
+            GitRepoViewerTopComponent.addTreeNode(defaultMutableTreeNode);
             this.setVisible(false);
         }
     }//GEN-LAST:event_addHostBtnActionPerformed

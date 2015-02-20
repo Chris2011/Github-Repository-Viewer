@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.chrisle.githubrepoviewer.components;
+package org.chrisle.gitrepoviewer.components;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -20,6 +15,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -31,39 +27,46 @@ import org.openide.util.NbBundle.Messages;
  * Top component which displays something.
  */
 @ConvertAsProperties(
-        dtd = "-//org.chrisle.githubrepoviewer.components//GithubRepoViewer//EN",
+        dtd = "-//org.chrisle.gitrepoviewer.components//RepoViewer//EN",
         autostore = false
 )
 @TopComponent.Description(
-        preferredID = "GithubRepoViewerTopComponent",
-        iconBase = "org/chrisle/githubrepoviewer/github.png",
+        preferredID = "GitRepoViewerTopComponent",
+        iconBase = "org/chrisle/gitrepoviewer/github.png",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
-@TopComponent.Registration(mode = "right", openAtStartup = false)
-@ActionID(category = "Window", id = "org.chrisle.githubrepoviewer.components.GithubRepoViewerTopComponent")
+@TopComponent.Registration(mode = "explorer", openAtStartup = false)
+@ActionID(category = "Window", id = "org.chrisle.gitrepoviewer.components.GitRepoViewerTopComponent")
 @ActionReferences({
     @ActionReference(path = "Menu/Window" /*, position = 333 */),
     @ActionReference(path = "Shortcuts", name = "DO-G DO-R")
 })
 @TopComponent.OpenActionRegistration(
-        displayName = "#CTL_GithubRepoViewerAction",
-        preferredID = "GithubRepoViewerToCpomponent"
+        displayName = "#CTL_GitRepoViewerAction",
+        preferredID = "GitRepoViewerTopComponent"
 )
 @Messages({
-    "CTL_GithubRepoViewerAction=Github Repository Viewer",
-    "CTL_GithubRepoViewerTopComponent=Github Repository Viewer",
-    "HINT_GithubRepoViewerTopComponent=This is a Repository Viewer"
+    "CTL_GitRepoViewerAction=Git Repository Viewer",
+    "CTL_GitRepoViewerTopComponent=Git Repository Viewer",
+    "HINT_GitRepoViewerTopComponent=This is a Git Repository Viewer"
 })
-public final class GithubRepoViewerTopComponent extends TopComponent {
-    public GithubRepoViewerTopComponent() {
-        _hostsRootNode = new DefaultMutableTreeNode("Hosts - (No hosts added)");
+public final class GitRepoViewerTopComponent extends TopComponent {
+    private static DefaultMutableTreeNode _hostRootNode;
+    private final DefaultTreeModel _hostTreeModel;
+    private TreePath _treeClickedPath;
+    private JPopupMenu _treeNodePopup;
+    private AbstractAction _popupAbstractAction;
+
+    public GitRepoViewerTopComponent() {
+        _hostRootNode = new DefaultMutableTreeNode(new IconData(new ImageIcon("../github.png"), "Hosts - (No hosts added)"));
+        _hostTreeModel = new DefaultTreeModel(_hostRootNode);
         _treeNodePopup = new JPopupMenu();
 
         initComponents();
-        setName(Bundle.CTL_GithubRepoViewerTopComponent());
-        setToolTipText(Bundle.HINT_GithubRepoViewerTopComponent());
+        setName(Bundle.CTL_GitRepoViewerTopComponent());
+        setToolTipText(Bundle.HINT_GitRepoViewerTopComponent());
 
-//        _treeNodePopup.setInvoker(_hostTree);
+        _treeNodePopup.setInvoker(_hostTree);
 
         _popupAbstractAction = new AbstractAction("Add host") {
             @Override
@@ -95,16 +98,17 @@ public final class GithubRepoViewerTopComponent extends TopComponent {
         addHost = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
+        _hostTree.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(_hostTree);
 
-        org.openide.awt.Mnemonics.setLocalizedText(addHost, org.openide.util.NbBundle.getMessage(GithubRepoViewerTopComponent.class, "GithubRepoViewerTopComponent.addHost.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(addHost, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent.addHost.text")); // NOI18N
         addHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addHostActionPerformed(evt);
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(GithubRepoViewerTopComponent.class, "GithubRepoViewerTopComponent.jButton1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent.jButton1.text")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -152,19 +156,17 @@ public final class GithubRepoViewerTopComponent extends TopComponent {
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-    private static DefaultMutableTreeNode _hostsRootNode;
-    private TreePath _treeClickedPath;
-    private JPopupMenu _treeNodePopup;
-    private AbstractAction _popupAbstractAction;
 
     @Override
     public void componentOpened() {
-        _hostTree.setModel(new DefaultTreeModel(_hostsRootNode));
+        _hostTree.setModel(_hostTreeModel);
+        _hostTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         _hostTree.setShowsRootHandles(true);
-
-        _treeNodePopup.add(_popupAbstractAction);
+        _hostTree.setEditable(true);
         _hostTree.add(_treeNodePopup);
         _hostTree.addMouseListener(new PopupTrigger());
+
+        _treeNodePopup.add(_popupAbstractAction);
     }
 
     
@@ -197,8 +199,8 @@ public final class GithubRepoViewerTopComponent extends TopComponent {
         _hostTree.setCellEditor(editor);
         _hostTree.setInvokesStopCellEditing(true);
 
-        _hostsRootNode.add(host);
-        _hostsRootNode.setUserObject("Hosts (" + _hostsRootNode.getChildCount() + ")");
+        _hostRootNode.add(host);
+        _hostRootNode.setUserObject("Hosts (" + _hostRootNode.getChildCount() + ")");
 
         _hostTree.expandRow(0);
         _hostTree.updateUI();

@@ -1,4 +1,4 @@
-package org.chrisle.githubrepoviewer.components;
+package org.chrisle.gitrepoviewer.components;
 
 import java.awt.Color;
 import java.awt.Component;

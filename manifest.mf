@@ -1,7 +1,6 @@
 Manifest-Version: 1.0
 AutoUpdate-Show-In-Client: true
-OpenIDE-Module: org.chrisle.githubrepoviewer
-OpenIDE-Module-Localizing-Bundle: org/chrisle/githubrepoviewer/Bundle.properties
+OpenIDE-Module: org.chrisle.gitrepoviewer
+OpenIDE-Module-Localizing-Bundle: org/chrisle/gitrepoviewer/Bundle.properties
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
 OpenIDE-Module-Specification-Version: 1.0
-
