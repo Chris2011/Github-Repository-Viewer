@@ -164,9 +164,12 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     public void componentOpened() {
         IconCellRenderer renderer = new IconCellRenderer();
 
+        _hostTree.setFocusable(true);
+        _hostTree.setFocusCycleRoot(true);
+        _hostTree.setRowHeight(20);
         _hostTree.setModel(_hostTreeModel);
-        _hostTree.setShowsRootHandles(true); 
-        _hostTree.setCellRenderer(renderer); 
+        _hostTree.setShowsRootHandles(true);
+        _hostTree.setCellRenderer(renderer);
         _hostTree.add(_treeNodePopup);
         _hostTree.addMouseListener(new PopupTrigger());
 
@@ -199,6 +202,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
         _hostRootNode.add(host);
         _hostRootNode.setUserObject(new IconData(_rootNodeIcon, "Repository Hosts (" + _hostRootNode.getChildCount() + ")"));
 
+//        _hostTree.setRowHeight(25);
         _hostTree.expandRow(0);
         _hostTree.updateUI();
     }

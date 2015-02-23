@@ -8,6 +8,7 @@ package org.chrisle.gitrepoviewer.components;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import javax.swing.ComboBoxModel;
 import javax.swing.Icon;
@@ -166,6 +167,13 @@ public class AddHostDialog extends javax.swing.JDialog {
 
             IconData hostIcon = new IconData(new ImageIcon("C:\\Projekte\\Netbeans Plugins\\Repository viewer\\src\\org\\chrisle\\gitrepoviewer\\" + _selectedHost.getHostIcon()), String.format("%s (%s)", _selectedHost.getHostName(), username.getText()));
             DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
+
+            if (_selectedHost.getRepositories() != null) {
+                for (Iterator iterator = _selectedHost.getRepositories().iterator(); iterator.hasNext();) {
+                    Object next = iterator.next();
+                    defaultMutableTreeNode.add(new DefaultMutableTreeNode(next));
+                }
+            }
 
             GitRepoViewerTopComponent.addTreeNode(defaultMutableTreeNode);
             this.setVisible(false);
