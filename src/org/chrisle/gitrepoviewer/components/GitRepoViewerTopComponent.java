@@ -52,7 +52,7 @@ import org.openide.util.NbBundle.Messages;
 })
 public final class GitRepoViewerTopComponent extends TopComponent {
     private static ImageIcon _rootNodeIcon;
-    private static DefaultMutableTreeNode _hostRootNode;
+    private static DefaultMutableTreeNode _hostTreeRootNode;
     private final DefaultTreeModel _hostTreeModel;
     private TreePath _treeClickedPath;
     private JPopupMenu _treeNodePopup;
@@ -62,8 +62,8 @@ public final class GitRepoViewerTopComponent extends TopComponent {
         initComponents();
 
         _rootNodeIcon = new ImageIcon("C:\\Projekte\\Netbeans Plugins\\Repository viewer\\src\\org\\chrisle\\gitrepoviewer\\world.png");
-        _hostRootNode = new DefaultMutableTreeNode(new IconData(_rootNodeIcon, "Repository Hosts - (No hosts added)"));
-        _hostTreeModel = new DefaultTreeModel(_hostRootNode);
+        _hostTreeRootNode = new DefaultMutableTreeNode(new IconData(_rootNodeIcon, "Repository Hosts - (No hosts added)"));
+        _hostTreeModel = new DefaultTreeModel(_hostTreeRootNode);
         _treeNodePopup = new JPopupMenu();
 
         setName(Bundle.CTL_GitRepoViewerTopComponent());
@@ -96,13 +96,13 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+        _hostScrollPanel = new javax.swing.JScrollPane();
         _hostTree = new javax.swing.JTree();
         addHost = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         _hostTree.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane1.setViewportView(_hostTree);
+        _hostScrollPanel.setViewportView(_hostTree);
 
         org.openide.awt.Mnemonics.setLocalizedText(addHost, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent.addHost.text")); // NOI18N
         addHost.addActionListener(new java.awt.event.ActionListener() {
@@ -125,7 +125,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(addHost, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -140,7 +140,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
                     .addComponent(addHost)
                     .addComponent(jButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -154,24 +154,25 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane _hostScrollPanel;
     private static javax.swing.JTree _hostTree;
     private javax.swing.JButton addHost;
     private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void componentOpened() {
         IconCellRenderer renderer = new IconCellRenderer();
 
-        _hostTree.setFocusable(true);
-        _hostTree.setFocusCycleRoot(true);
         _hostTree.setRowHeight(20);
         _hostTree.setModel(_hostTreeModel);
         _hostTree.setShowsRootHandles(true);
         _hostTree.setCellRenderer(renderer);
         _hostTree.add(_treeNodePopup);
         _hostTree.addMouseListener(new PopupTrigger());
+        _hostTree.setSelectionPath(_treeClickedPath);
+        _hostTree.setFocusable(true);
+        _hostTree.requestFocusInWindow();
 
         _treeNodePopup.add(_popupAbstractAction);
     }
@@ -199,10 +200,9 @@ public final class GitRepoViewerTopComponent extends TopComponent {
       }
 
     public static void addTreeNode(MutableTreeNode host) {
-        _hostRootNode.add(host);
-        _hostRootNode.setUserObject(new IconData(_rootNodeIcon, "Repository Hosts (" + _hostRootNode.getChildCount() + ")"));
+        _hostTreeRootNode.add(host);
+        _hostTreeRootNode.setUserObject(new IconData(_rootNodeIcon, "Repository Hosts (" + _hostTreeRootNode.getChildCount() + ")"));
 
-//        _hostTree.setRowHeight(25);
         _hostTree.expandRow(0);
         _hostTree.updateUI();
     }
