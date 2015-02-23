@@ -98,23 +98,23 @@ public final class GitRepoViewerTopComponent extends TopComponent {
 
         _hostScrollPanel = new javax.swing.JScrollPane();
         _hostTree = new javax.swing.JTree();
-        addHost = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        _addHost = new javax.swing.JButton();
+        _removeHost = new javax.swing.JButton();
 
         _hostTree.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         _hostScrollPanel.setViewportView(_hostTree);
 
-        org.openide.awt.Mnemonics.setLocalizedText(addHost, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent.addHost.text")); // NOI18N
-        addHost.addActionListener(new java.awt.event.ActionListener() {
+        org.openide.awt.Mnemonics.setLocalizedText(_addHost, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent._addHost.text")); // NOI18N
+        _addHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addHostActionPerformed(evt);
+                _addHostActionPerformed(evt);
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent.jButton1.text")); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        org.openide.awt.Mnemonics.setLocalizedText(_removeHost, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent._removeHost.text")); // NOI18N
+        _removeHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                _removeHostActionPerformed(evt);
             }
         });
 
@@ -127,9 +127,9 @@ public final class GitRepoViewerTopComponent extends TopComponent {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(addHost, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(_addHost, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(_removeHost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -137,27 +137,27 @@ public final class GitRepoViewerTopComponent extends TopComponent {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addHost)
-                    .addComponent(jButton1))
+                    .addComponent(_addHost)
+                    .addComponent(_removeHost))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostActionPerformed
+    private void _addHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__addHostActionPerformed
         AddMethod();
-    }//GEN-LAST:event_addHostActionPerformed
+    }//GEN-LAST:event__addHostActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void _removeHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__removeHostActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event__removeHostActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton _addHost;
     private javax.swing.JScrollPane _hostScrollPanel;
     private static javax.swing.JTree _hostTree;
-    private javax.swing.JButton addHost;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton _removeHost;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -170,9 +170,16 @@ public final class GitRepoViewerTopComponent extends TopComponent {
         _hostTree.setCellRenderer(renderer);
         _hostTree.add(_treeNodePopup);
         _hostTree.addMouseListener(new PopupTrigger());
-        _hostTree.setSelectionPath(_treeClickedPath);
-        _hostTree.setFocusable(true);
+
+        this.requestActive();
+        this.requestFocusInWindow();
+
+        _hostScrollPanel.requestFocusInWindow();
         _hostTree.requestFocusInWindow();
+
+//        _hostTree.setFocusable(true);
+//        _hostTree.setSelectionPath(_treeClickedPath);
+//        _hostTree.requestFocusInWindow();
 
         _treeNodePopup.add(_popupAbstractAction);
     }
