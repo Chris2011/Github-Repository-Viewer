@@ -164,7 +164,7 @@ public class AddHostDialog extends javax.swing.JDialog {
             Object selectedHost = _hostSelectBox.getSelectedItem();
             _selectedHost = hosts.get(selectedHost);
 
-            IconData hostIcon = new IconData(new ImageIcon("org/chrisle/gitrepoviewer/" + _selectedHost.getHostIcon()), String.format("%s (%s)", _selectedHost.getHostName(), username.getText()));
+            IconData hostIcon = new IconData(new ImageIcon("C:\\Projekte\\Netbeans Plugins\\Repository viewer\\src\\org\\chrisle\\gitrepoviewer\\" + _selectedHost.getHostIcon()), String.format("%s (%s)", _selectedHost.getHostName(), username.getText()));
             DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
 
             GitRepoViewerTopComponent.addTreeNode(defaultMutableTreeNode);

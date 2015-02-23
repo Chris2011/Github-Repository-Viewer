@@ -32,7 +32,7 @@ import org.openide.util.NbBundle.Messages;
 )
 @TopComponent.Description(
         preferredID = "GitRepoViewerTopComponent",
-        iconBase = "org/chrisle/gitrepoviewer/github.png",
+        iconBase = "org/chrisle/gitrepoviewer/world.png",
         persistenceType = TopComponent.PERSISTENCE_ALWAYS
 )
 @TopComponent.Registration(mode = "explorer", openAtStartup = false)
@@ -51,6 +51,7 @@ import org.openide.util.NbBundle.Messages;
     "HINT_GitRepoViewerTopComponent=This is a Git Repository Viewer"
 })
 public final class GitRepoViewerTopComponent extends TopComponent {
+    private static ImageIcon _rootNodeIcon;
     private static DefaultMutableTreeNode _hostRootNode;
     private final DefaultTreeModel _hostTreeModel;
     private TreePath _treeClickedPath;
@@ -58,11 +59,13 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     private AbstractAction _popupAbstractAction;
 
     public GitRepoViewerTopComponent() {
-        _hostRootNode = new DefaultMutableTreeNode(new IconData(new ImageIcon("../github.png"), "Hosts - (No hosts added)"));
+        initComponents();
+
+        _rootNodeIcon = new ImageIcon("C:\\Projekte\\Netbeans Plugins\\Repository viewer\\src\\org\\chrisle\\gitrepoviewer\\world.png");
+        _hostRootNode = new DefaultMutableTreeNode(new IconData(_rootNodeIcon, "Repository Hosts - (No hosts added)"));
         _hostTreeModel = new DefaultTreeModel(_hostRootNode);
         _treeNodePopup = new JPopupMenu();
 
-        initComponents();
         setName(Bundle.CTL_GitRepoViewerTopComponent());
         setToolTipText(Bundle.HINT_GitRepoViewerTopComponent());
 
@@ -159,10 +162,11 @@ public final class GitRepoViewerTopComponent extends TopComponent {
 
     @Override
     public void componentOpened() {
+        IconCellRenderer renderer = new IconCellRenderer();
+
         _hostTree.setModel(_hostTreeModel);
-        _hostTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-        _hostTree.setShowsRootHandles(true);
-        _hostTree.setEditable(true);
+        _hostTree.setShowsRootHandles(true); 
+        _hostTree.setCellRenderer(renderer); 
         _hostTree.add(_treeNodePopup);
         _hostTree.addMouseListener(new PopupTrigger());
 
@@ -192,15 +196,8 @@ public final class GitRepoViewerTopComponent extends TopComponent {
       }
 
     public static void addTreeNode(MutableTreeNode host) {
-        IconCellRenderer renderer = new IconCellRenderer();
-        _hostTree.setCellRenderer(renderer); 
-
-        IconCellEditor editor = new IconCellEditor(_hostTree);
-        _hostTree.setCellEditor(editor);
-        _hostTree.setInvokesStopCellEditing(true);
-
         _hostRootNode.add(host);
-        _hostRootNode.setUserObject("Hosts (" + _hostRootNode.getChildCount() + ")");
+        _hostRootNode.setUserObject(new IconData(_rootNodeIcon, "Repository Hosts (" + _hostRootNode.getChildCount() + ")"));
 
         _hostTree.expandRow(0);
         _hostTree.updateUI();
