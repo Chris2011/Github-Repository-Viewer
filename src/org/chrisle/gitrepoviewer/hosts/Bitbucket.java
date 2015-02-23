@@ -1,5 +1,6 @@
 package org.chrisle.gitrepoviewer.hosts;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class Bitbucket implements IHost {
 
     @Override
     public List<String> getRepositories() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
     @Override

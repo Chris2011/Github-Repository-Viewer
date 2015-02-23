@@ -1,5 +1,6 @@
 package org.chrisle.gitrepoviewer.hosts;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
@@ -16,9 +17,16 @@ public class Github implements IHost {
         this._hostName = _hostName;
     }
 
+    
+    // TODO: Change with Github API
+
     @Override
     public List<String> getRepositories() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new ArrayList<String>() {{
+            add("Repo1");
+            add("Repo2");
+            add("Repo3");
+        }};
     }
 
     @Override
