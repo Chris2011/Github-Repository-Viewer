@@ -3,19 +3,13 @@ package org.chrisle.gitrepoviewer.components;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javafx.scene.input.MouseButton;
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
-import javax.swing.JWindow;
-import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -32,8 +26,7 @@ import org.openide.util.NbBundle.Messages;
 )
 @TopComponent.Description(
         preferredID = "GitRepoViewerTopComponent",
-        iconBase = "org/chrisle/gitrepoviewer/world.png",
-        persistenceType = TopComponent.PERSISTENCE_ALWAYS
+        iconBase = "org/chrisle/gitrepoviewer/resources/world.png"
 )
 @TopComponent.Registration(mode = "explorer", openAtStartup = false)
 @ActionID(category = "Window", id = "org.chrisle.gitrepoviewer.components.GitRepoViewerTopComponent")
@@ -61,7 +54,8 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     public GitRepoViewerTopComponent() {
         initComponents();
 
-        _rootNodeIcon = new ImageIcon("C:\\Projekte\\Netbeans Plugins\\Repository viewer\\src\\org\\chrisle\\gitrepoviewer\\world.png");
+//        _rootNodeIcon = new ImageIcon("org/chrisle/gitrepoviewer/resources/world.png");
+        _rootNodeIcon = new ImageIcon("C:\\Projekte\\Netbeans Plugins\\Repository viewer\\src\\org\\chrisle\\gitrepoviewer\\resources\\world.png");
         _hostTreeRootNode = new DefaultMutableTreeNode(new IconData(_rootNodeIcon, "Repository Hosts - (No hosts added)"));
         _hostTreeModel = new DefaultTreeModel(_hostTreeRootNode);
         _treeNodePopup = new JPopupMenu();
