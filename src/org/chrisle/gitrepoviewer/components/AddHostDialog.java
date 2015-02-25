@@ -169,9 +169,8 @@ public class AddHostDialog extends javax.swing.JDialog {
             DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
 
             if (_selectedHost.getRepositories() != null) {
-                for (Iterator iterator = _selectedHost.getRepositories().iterator(); iterator.hasNext();) {
-                    Object next = iterator.next();
-                    defaultMutableTreeNode.add(new DefaultMutableTreeNode(next));
+                for (String host: _selectedHost.getRepositories()) {
+                    defaultMutableTreeNode.add(new DefaultMutableTreeNode(host));
                 }
             }
 

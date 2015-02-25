@@ -6,6 +6,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
@@ -98,6 +101,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
         _hostTree.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         _hostScrollPanel.setViewportView(_hostTree);
 
+        _addHost.setMnemonic('a');
         org.openide.awt.Mnemonics.setLocalizedText(_addHost, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent._addHost.text")); // NOI18N
         _addHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,7 +109,9 @@ public final class GitRepoViewerTopComponent extends TopComponent {
             }
         });
 
+        _removeHost.setMnemonic('r');
         org.openide.awt.Mnemonics.setLocalizedText(_removeHost, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent._removeHost.text")); // NOI18N
+        _removeHost.setEnabled(false);
         _removeHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _removeHostActionPerformed(evt);
@@ -119,11 +125,11 @@ public final class GitRepoViewerTopComponent extends TopComponent {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                    .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(_addHost, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(_removeHost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(_addHost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(_removeHost, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -151,7 +157,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     private javax.swing.JButton _addHost;
     private javax.swing.JScrollPane _hostScrollPanel;
     private static javax.swing.JTree _hostTree;
-    private javax.swing.JButton _removeHost;
+    private static javax.swing.JButton _removeHost;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -201,6 +207,15 @@ public final class GitRepoViewerTopComponent extends TopComponent {
       }
 
     public static void addTreeNode(MutableTreeNode host) {
+        _hostTree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode)_hostTree.getLastSelectedPathComponent();
+
+                _removeHost.setEnabled(node != null && !node.equals(node.getRoot()));
+            }
+        });
+
         _hostTreeRootNode.add(host);
         _hostTreeRootNode.setUserObject(new IconData(_rootNodeIcon, "Repository Hosts (" + _hostTreeRootNode.getChildCount() + ")"));
 

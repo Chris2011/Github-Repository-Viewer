@@ -19,11 +19,11 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="_hostScrollPanel" pref="376" max="32767" attributes="0"/>
+                  <Component id="_hostScrollPanel" pref="289" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <Component id="_addHost" min="-2" pref="184" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="_removeHost" max="32767" attributes="0"/>
+                      <Component id="_addHost" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="_removeHost" min="-2" pref="146" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -67,6 +67,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="_addHost">
       <Properties>
+        <Property name="mnemonic" type="int" value="97"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="org/chrisle/gitrepoviewer/components/Bundle.properties" key="GitRepoViewerTopComponent._addHost.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
@@ -77,13 +78,18 @@
     </Component>
     <Component class="javax.swing.JButton" name="_removeHost">
       <Properties>
+        <Property name="mnemonic" type="int" value="114"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
           <ResourceString bundle="org/chrisle/gitrepoviewer/components/Bundle.properties" key="GitRepoViewerTopComponent._removeHost.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="_removeHostActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
