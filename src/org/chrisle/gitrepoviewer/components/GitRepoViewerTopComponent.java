@@ -7,8 +7,6 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
@@ -51,13 +49,19 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     private static DefaultMutableTreeNode _hostTreeRootNode;
     private final DefaultTreeModel _hostTreeModel;
     private TreePath _treeClickedPath;
-    private JPopupMenu _treeNodePopup;
-    private AbstractAction _popupAbstractAction;
+    private static JPopupMenu _treeNodePopup;
+    private static AbstractAction _popupAddHostAction;
+    private static AbstractAction _popupRemoveHostAction;
+    
+    private static boolean isRootNode(DefaultMutableTreeNode selectedTreeNode) {
+        return selectedTreeNode != null && selectedTreeNode.equals(selectedTreeNode.getRoot());
+    }
 
     public GitRepoViewerTopComponent() {
         initComponents();
 
-//        _rootNodeIcon = new ImageIcon("org/chrisle/gitrepoviewer/resources/world.png");
+        // TODO: Doesn't work with relative paths, don't know why atm.
+        // _rootNodeIcon = new ImageIcon("org/chrisle/gitrepoviewer/resources/world.png");
         _rootNodeIcon = new ImageIcon("C:\\Projekte\\Netbeans Plugins\\Repository viewer\\src\\org\\chrisle\\gitrepoviewer\\resources\\world.png");
         _hostTreeRootNode = new DefaultMutableTreeNode(new IconData(_rootNodeIcon, "Repository Hosts - (No hosts added)"));
         _hostTreeModel = new DefaultTreeModel(_hostTreeRootNode);
@@ -66,9 +70,18 @@ public final class GitRepoViewerTopComponent extends TopComponent {
         setName(Bundle.CTL_GitRepoViewerTopComponent());
         setToolTipText(Bundle.HINT_GitRepoViewerTopComponent());
 
-        _treeNodePopup.setInvoker(_hostTree);
+        _popupAddHostAction = new AbstractAction("Add host") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (_treeClickedPath == null) {
+                    return;
+                }
 
-        _popupAbstractAction = new AbstractAction("Add host") {
+                AddMethod();
+            }
+        };
+        
+        _popupRemoveHostAction = new AbstractAction("Remove host") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (_treeClickedPath == null) {
@@ -121,27 +134,27 @@ public final class GitRepoViewerTopComponent extends TopComponent {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(_addHost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(_removeHost, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addComponent(_addHost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(_removeHost, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_addHost)
-                    .addComponent(_removeHost))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(_addHost)
+                                .addComponent(_removeHost))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(_hostScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                        .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -162,58 +175,49 @@ public final class GitRepoViewerTopComponent extends TopComponent {
 
     @Override
     public void componentOpened() {
-        IconCellRenderer renderer = new IconCellRenderer();
-
-        _hostTree.setRowHeight(20);
         _hostTree.setModel(_hostTreeModel);
+        _hostTree.setRowHeight(20);
         _hostTree.setShowsRootHandles(true);
-        _hostTree.setCellRenderer(renderer);
         _hostTree.add(_treeNodePopup);
         _hostTree.addMouseListener(new PopupTrigger());
+        
+        IconCellRenderer renderer = new IconCellRenderer();
+        _hostTree.setCellRenderer(renderer);
 
-        this.requestActive();
-        this.requestFocusInWindow();
-
-        _hostScrollPanel.requestFocusInWindow();
-        _hostTree.requestFocusInWindow();
-
-//        _hostTree.setFocusable(true);
-//        _hostTree.setSelectionPath(_treeClickedPath);
-//        _hostTree.requestFocusInWindow();
-
-        _treeNodePopup.add(_popupAbstractAction);
+        _popupRemoveHostAction.setEnabled(false);
+        
+        _treeNodePopup.setInvoker(_hostTree);
+        _treeNodePopup.add(_popupAddHostAction);
+        _treeNodePopup.add(_popupRemoveHostAction);
     }
 
-    
     class PopupTrigger extends MouseAdapter {
         @Override
         public void mouseReleased(MouseEvent e) {
-          if (e.isPopupTrigger()) {
-            int x = e.getX();
-            int y = e.getY();
-            TreePath path = _hostTree.getPathForLocation(x, y);
-            if (path != null) {
-//              if (_hostTree.isExpanded(path)) {
-//                _popupAbstractAction.putValue(Action.NAME, "Collapse");
-//              }
-//              else {
-//                _popupAbstractAction.putValue(Action.NAME, "Expand");
-//              }
-
-              _treeNodePopup.show(_hostTree, x, y);
-              _treeClickedPath = path;
+            if (e.isPopupTrigger()) {
+                int x = e.getX();
+                int y = e.getY();
+                TreePath path = _hostTree.getPathForLocation(x, y);
+                if (path != null) {
+                    _hostTree.setSelectionPath(path);
+                    _treeNodePopup.show(_hostTree, x, y);
+                    _treeClickedPath = path;
+                }
             }
-          }
         }
-      }
+    }
 
     public static void addTreeNode(MutableTreeNode host) {
+        final boolean isRootNode = isRootNode((DefaultMutableTreeNode)_hostTree.getLastSelectedPathComponent());
+        
+        _popupRemoveHostAction.setEnabled(!isRootNode);
+        
         _hostTree.addTreeSelectionListener((TreeSelectionEvent e) -> {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode)_hostTree.getLastSelectedPathComponent();
-
-            _removeHost.setEnabled(node != null && !node.equals(node.getRoot()));
+            boolean isRootNode1 = isRootNode((DefaultMutableTreeNode)_hostTree.getLastSelectedPathComponent());
+            _popupRemoveHostAction.setEnabled(!isRootNode1);
+            _removeHost.setEnabled(!isRootNode1);
         });
-
+        
         _hostTreeRootNode.add(host);
         _hostTreeRootNode.setUserObject(new IconData(_rootNodeIcon, "Repository Hosts (" + _hostTreeRootNode.getChildCount() + ")"));
 
