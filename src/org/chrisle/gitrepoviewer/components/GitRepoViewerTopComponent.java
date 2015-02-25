@@ -101,7 +101,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
         _hostTree.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         _hostScrollPanel.setViewportView(_hostTree);
 
-        _addHost.setMnemonic('a');
+        _addHost.setMnemonic('o');
         org.openide.awt.Mnemonics.setLocalizedText(_addHost, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent._addHost.text")); // NOI18N
         _addHost.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,7 +109,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
             }
         });
 
-        _removeHost.setMnemonic('r');
+        _removeHost.setMnemonic('m');
         org.openide.awt.Mnemonics.setLocalizedText(_removeHost, org.openide.util.NbBundle.getMessage(GitRepoViewerTopComponent.class, "GitRepoViewerTopComponent._removeHost.text")); // NOI18N
         _removeHost.setEnabled(false);
         _removeHost.addActionListener(new java.awt.event.ActionListener() {
@@ -186,6 +186,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
 
     
     class PopupTrigger extends MouseAdapter {
+        @Override
         public void mouseReleased(MouseEvent e) {
           if (e.isPopupTrigger()) {
             int x = e.getX();
@@ -207,13 +208,10 @@ public final class GitRepoViewerTopComponent extends TopComponent {
       }
 
     public static void addTreeNode(MutableTreeNode host) {
-        _hostTree.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode node = (DefaultMutableTreeNode)_hostTree.getLastSelectedPathComponent();
+        _hostTree.addTreeSelectionListener((TreeSelectionEvent e) -> {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode)_hostTree.getLastSelectedPathComponent();
 
-                _removeHost.setEnabled(node != null && !node.equals(node.getRoot()));
-            }
+            _removeHost.setEnabled(node != null && !node.equals(node.getRoot()));
         });
 
         _hostTreeRootNode.add(host);

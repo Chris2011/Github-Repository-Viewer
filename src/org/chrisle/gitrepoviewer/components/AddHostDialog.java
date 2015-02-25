@@ -72,6 +72,9 @@ public class AddHostDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.title")); // NOI18N
+        setAlwaysOnTop(true);
+        setFocusTraversalPolicyProvider(true);
+        setModal(true);
         setName("hostDialog"); // NOI18N
         setResizable(false);
 
