@@ -212,14 +212,22 @@ public final class GitRepoViewerTopComponent extends TopComponent {
             }
         }
     }
+    
+    public static void removeTreeNode() {
+        DefaultMutableTreeNode selectedTreeNode = getSelectedTreeNode();
+        selectedTreeNode.removeFromParent();
+    }
+
+    private static DefaultMutableTreeNode getSelectedTreeNode() {
+        return (DefaultMutableTreeNode)_hostTree.getLastSelectedPathComponent();
+    }
 
     public static void addTreeNode(MutableTreeNode host) {
-        final boolean isRootNode = isRootNode((DefaultMutableTreeNode)_hostTree.getLastSelectedPathComponent());
-        
+        final boolean isRootNode = isRootNode(getSelectedTreeNode());
+
         _popupRemoveHostAction.setEnabled(!isRootNode);
-        
         _hostTree.addTreeSelectionListener((TreeSelectionEvent e) -> {
-            boolean isRootNode1 = isRootNode((DefaultMutableTreeNode)_hostTree.getLastSelectedPathComponent());
+            boolean isRootNode1 = isRootNode(getSelectedTreeNode());
             _popupRemoveHostAction.setEnabled(!isRootNode1);
             _removeHost.setEnabled(!isRootNode1);
         });
