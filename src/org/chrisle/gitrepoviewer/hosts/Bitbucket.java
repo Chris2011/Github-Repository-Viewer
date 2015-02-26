@@ -41,6 +41,6 @@ public class Bitbucket implements IHost {
 
     @Override
     public String getHostIcon() {
-        return "bitbucket.png";
+        return "org/chrisle/gitrepoviewer/resources/bitbucket.png";
     }
 }

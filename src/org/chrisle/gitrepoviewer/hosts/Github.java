@@ -51,6 +51,6 @@ public class Github implements IHost {
 
     @Override
     public String getHostIcon() {
-        return "github.png";
+        return "org/chrisle/gitrepoviewer/resources/github.png";
     }
 }
