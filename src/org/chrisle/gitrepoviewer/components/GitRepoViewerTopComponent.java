@@ -5,8 +5,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JPopupMenu;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -55,6 +53,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     private static JPopupMenu _treeNodePopup;
     private static AbstractAction _popupAddHostAction;
     private static AbstractAction _popupRemoveHostAction;
+    private static IconData _initializeRootNode;
     
     private static boolean isRootNode(DefaultMutableTreeNode selectedTreeNode) {
         return selectedTreeNode != null && selectedTreeNode.equals(selectedTreeNode.getRoot());
@@ -66,15 +65,16 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     }
 
     private void RemoveHost() {
-        JDialog test = new JDialog();
-        test.setVisible(true);
+        RemoveHostDialog removeHostDialog = new RemoveHostDialog(null, true);
+        removeHostDialog.setVisible(true);
     }
 
     public GitRepoViewerTopComponent() {
         initComponents();
 
          _rootNodeIcon = ImageUtilities.image2Icon(ImageUtilities.loadImage("org/chrisle/gitrepoviewer/resources/world.png"));
-        _hostTreeRootNode = new DefaultMutableTreeNode(new IconData(_rootNodeIcon, "Repository Hosts - (No hosts added)"));
+         _initializeRootNode = new IconData(_rootNodeIcon, "Repository Hosts - (No hosts added)");
+        _hostTreeRootNode = new DefaultMutableTreeNode(_initializeRootNode);
         _hostTreeModel = new DefaultTreeModel(_hostTreeRootNode);
         _treeNodePopup = new JPopupMenu();
 
@@ -216,6 +216,15 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     public static void removeTreeNode() {
         DefaultMutableTreeNode selectedTreeNode = getSelectedTreeNode();
         selectedTreeNode.removeFromParent();
+        
+        if (_hostTreeRootNode.getChildCount() <= 0) {
+            _hostTreeRootNode.setUserObject(_initializeRootNode);
+        } else {
+            _hostTreeRootNode.setUserObject(new IconData(_rootNodeIcon, "Repository Hosts (" + _hostTreeRootNode.getChildCount() + ")"));
+        }
+
+        _hostTree.setSelectionRow(0);
+        _hostTree.updateUI();
     }
 
     private static DefaultMutableTreeNode getSelectedTreeNode() {
