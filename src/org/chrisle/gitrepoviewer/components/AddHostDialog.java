@@ -18,6 +18,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.chrisle.gitrepoviewer.hosts.Bitbucket;
 import org.chrisle.gitrepoviewer.hosts.Github;
 import org.chrisle.gitrepoviewer.hosts.IHost;
+import org.openide.util.ImageUtilities;
 
 /**
  *
@@ -168,7 +169,7 @@ public class AddHostDialog extends javax.swing.JDialog {
             Object selectedHost = _hostSelectBox.getSelectedItem();
             _selectedHost = hosts.get(selectedHost);
 
-            IconData hostIcon = new IconData(new ImageIcon("C:\\Projekte\\Netbeans Plugins\\Repository viewer\\src\\org\\chrisle\\gitrepoviewer\\" + _selectedHost.getHostIcon()), String.format("%s (%s)", _selectedHost.getHostName(), username.getText()));
+            IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), username.getText()));
             DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
 
             if (_selectedHost.getRepositories() != null) {

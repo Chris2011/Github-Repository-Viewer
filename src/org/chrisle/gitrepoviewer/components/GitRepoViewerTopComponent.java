@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.event.TreeSelectionEvent;
@@ -15,6 +16,7 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
+import org.openide.util.ImageUtilities;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 
@@ -45,7 +47,7 @@ import org.openide.util.NbBundle.Messages;
     "HINT_GitRepoViewerTopComponent=This is a Git Repository Viewer"
 })
 public final class GitRepoViewerTopComponent extends TopComponent {
-    private static ImageIcon _rootNodeIcon;
+    private static Icon _rootNodeIcon;
     private static DefaultMutableTreeNode _hostTreeRootNode;
     private final DefaultTreeModel _hostTreeModel;
     private TreePath _treeClickedPath;
@@ -60,9 +62,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     public GitRepoViewerTopComponent() {
         initComponents();
 
-        // TODO: Doesn't work with relative paths, don't know why atm.
-        // _rootNodeIcon = new ImageIcon("org/chrisle/gitrepoviewer/resources/world.png");
-        _rootNodeIcon = new ImageIcon("C:\\Projekte\\Netbeans Plugins\\Repository viewer\\src\\org\\chrisle\\gitrepoviewer\\resources\\world.png");
+         _rootNodeIcon = ImageUtilities.image2Icon(ImageUtilities.loadImage("org/chrisle/gitrepoviewer/resources/world.png"));
         _hostTreeRootNode = new DefaultMutableTreeNode(new IconData(_rootNodeIcon, "Repository Hosts - (No hosts added)"));
         _hostTreeModel = new DefaultTreeModel(_hostTreeRootNode);
         _treeNodePopup = new JPopupMenu();
