@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.chrisle.gitrepoviewer.components;
 
 /**
@@ -43,9 +38,16 @@ public class RemoveHostDialog extends javax.swing.JDialog {
         org.openide.awt.Mnemonics.setLocalizedText(_removeHostLabel, org.openide.util.NbBundle.getMessage(RemoveHostDialog.class, "RemoveHostDialog._removeHostLabel.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(_removeHostYes, org.openide.util.NbBundle.getMessage(RemoveHostDialog.class, "RemoveHostDialog._removeHostYes.text")); // NOI18N
+        
         _removeHostYes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _removeHostYesActionPerformed(evt);
+            }
+        });
+
+        _removeHostNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _removeHostNoActionPerformed(evt);
             }
         });
 
@@ -81,8 +83,14 @@ public class RemoveHostDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void _removeHostYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__removeHostYesActionPerformed
-                GitRepoViewerTopComponent.removeTreeNode();
-    }//GEN-LAST:event__removeHostYesActionPerformed
+        GitRepoViewerTopComponent.removeTreeNode();
+        this.setVisible(false);
+    }
+
+    private void _removeHostNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__removeHostNoActionPerformed
+        this.setVisible(false);
+    }
+//GEN-LAST:event__removeHostYesActionPerformed
 
     /**
      * @param args the command line arguments
