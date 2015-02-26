@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JPopupMenu;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -59,6 +60,16 @@ public final class GitRepoViewerTopComponent extends TopComponent {
         return selectedTreeNode != null && selectedTreeNode.equals(selectedTreeNode.getRoot());
     }
 
+    private void AddHost() {
+        AddHostDialog hostsDialog = new AddHostDialog(null, true);
+        hostsDialog.setVisible(true);
+    }
+
+    private void RemoveHost() {
+        JDialog test = new JDialog();
+        test.setVisible(true);
+    }
+
     public GitRepoViewerTopComponent() {
         initComponents();
 
@@ -77,7 +88,7 @@ public final class GitRepoViewerTopComponent extends TopComponent {
                     return;
                 }
 
-                AddMethod();
+                AddHost();
             }
         };
         
@@ -88,14 +99,9 @@ public final class GitRepoViewerTopComponent extends TopComponent {
                     return;
                 }
 
-                AddMethod();
+                RemoveHost();
             }
         };
-    }
-
-    private void AddMethod() {
-        AddHostDialog hostsDialog = new AddHostDialog(null, true);
-        hostsDialog.setVisible(true);
     }
 
     /**
@@ -159,11 +165,11 @@ public final class GitRepoViewerTopComponent extends TopComponent {
     }// </editor-fold>//GEN-END:initComponents
 
     private void _addHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__addHostActionPerformed
-        AddMethod();
+        AddHost();
     }//GEN-LAST:event__addHostActionPerformed
 
     private void _removeHostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__removeHostActionPerformed
-        // TODO add your handling code here:
+        RemoveHost();
     }//GEN-LAST:event__removeHostActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
