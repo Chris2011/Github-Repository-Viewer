@@ -5,15 +5,8 @@
  */
 package org.chrisle.gitrepoviewer.components;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import javax.swing.ComboBoxModel;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.event.ListDataListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.chrisle.gitrepoviewer.hosts.Bitbucket;
 import org.chrisle.gitrepoviewer.hosts.Github;
@@ -25,7 +18,7 @@ import org.openide.util.ImageUtilities;
  * @author chrl
  */
 public class AddHostDialog extends javax.swing.JDialog {
-    private Map<String, IHost> hosts;
+    private final Map<String, IHost> hosts;
     private IHost _selectedHost;
 
     /**
@@ -173,9 +166,9 @@ public class AddHostDialog extends javax.swing.JDialog {
             DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
 
             if (_selectedHost.getRepositories() != null) {
-                for (String host: _selectedHost.getRepositories()) {
+                _selectedHost.getRepositories().stream().forEach((host) -> {
                     defaultMutableTreeNode.add(new DefaultMutableTreeNode(host));
-                }
+                });
             }
 
             GitRepoViewerTopComponent.addTreeNode(defaultMutableTreeNode);
