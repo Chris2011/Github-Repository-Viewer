@@ -29,8 +29,8 @@ public class AddHostDialog extends javax.swing.JDialog {
         initComponents();
 
         hosts = new HashMap<String, IHost>() {{
-            IHost github = new Github("Github");
-            IHost bitbucket = new Bitbucket("Bitbucket");
+            IHost github = new Github("Github", _username.getText(), _password.getPassword().toString());
+            IHost bitbucket = new Bitbucket("Bitbucket", _username.getText(), _password.getPassword().toString());
 
             put(github.getHostName(), github);
             put(bitbucket.getHostName(), bitbucket);
@@ -56,9 +56,9 @@ public class AddHostDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
+        _username = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        password = new javax.swing.JPasswordField();
+        _password = new javax.swing.JPasswordField();
         addHostBtn = new javax.swing.JButton();
         _hint = new javax.swing.JLabel();
         _hostSelectBox = new javax.swing.JComboBox();
@@ -73,16 +73,14 @@ public class AddHostDialog extends javax.swing.JDialog {
         setResizable(false);
 
         jLabel1.setDisplayedMnemonic('u');
-        jLabel1.setLabelFor(username);
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.jLabel1.text")); // NOI18N
 
-        username.setText(org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.username.text")); // NOI18N
+        _username.setText(org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog._username.text")); // NOI18N
 
         jLabel2.setDisplayedMnemonic('p');
-        jLabel2.setLabelFor(password);
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.jLabel2.text")); // NOI18N
 
-        password.setText(org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.password.text")); // NOI18N
+        _password.setText(org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog._password.text")); // NOI18N
 
         addHostBtn.setMnemonic('a');
         org.openide.awt.Mnemonics.setLocalizedText(addHostBtn, org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.addHostBtn.text")); // NOI18N
@@ -123,10 +121,10 @@ public class AddHostDialog extends javax.swing.JDialog {
                                         .addGap(46, 46, 46)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(_hostSelectBox, 0, 109, Short.MAX_VALUE)
-                                            .addComponent(password)))
+                                            .addComponent(_password)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(_username, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -139,14 +137,14 @@ public class AddHostDialog extends javax.swing.JDialog {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                    .addComponent(_username, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(_password, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(addHostBtn)
                 .addGap(55, 55, 55)
@@ -158,11 +156,11 @@ public class AddHostDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addHostBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostBtnActionPerformed
-        if (!username.getText().isEmpty() && password.getPassword().length > 0) {
+        if (!_username.getText().isEmpty() && _password.getPassword().length > 0) {
             Object selectedHost = _hostSelectBox.getSelectedItem();
             _selectedHost = hosts.get(selectedHost);
 
-            IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), username.getText()));
+            IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _username.getText()));
             DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
 
             if (_selectedHost.getRepositories() != null) {
@@ -222,11 +220,11 @@ public class AddHostDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel _hint;
     private javax.swing.JComboBox _hostSelectBox;
+    private javax.swing.JPasswordField _password;
+    private javax.swing.JTextField _username;
     private javax.swing.JButton addHostBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField password;
-    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }
