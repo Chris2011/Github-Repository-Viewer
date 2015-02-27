@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.apisupport.project</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/nb-module-project/3">
+            <code-name-base>org.egit</code-name-base>
+            <suite-component/>
+            <module-dependencies/>
+            <public-packages>
+                <package>org.eclipse.egit.github.core</package>
+                <package>org.eclipse.egit.github.core.client</package>
+                <package>org.eclipse.egit.github.core.event</package>
+                <package>org.eclipse.egit.github.core.service</package>
+                <package>org.eclipse.egit.github.core.util</package>
+            </public-packages>
+            <class-path-extension>
+                <runtime-relative-path>ext/org.eclipse.egit.github.core-3.7.0.201502260915-r.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/org.eclipse.egit.github.core-3.7.0.201502260915-r.jar</binary-origin>
+            </class-path-extension>
+        </data>
+    </configuration>
+</project>
