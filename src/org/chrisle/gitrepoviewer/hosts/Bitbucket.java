@@ -2,6 +2,7 @@ package org.chrisle.gitrepoviewer.hosts;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.eclipse.egit.github.core.Repository;
 
 /**
  *
@@ -10,12 +11,12 @@ import java.util.List;
 public class Bitbucket implements IHost {
     private String _hostName;
 
-    public Bitbucket(String hostName) {
+    public Bitbucket(String hostName, String userName, String password) {
         _hostName = hostName;
     }
 
     @Override
-    public List<String> getRepositories() {
+    public List<Repository> getRepositories() {
         return null;
     }
 

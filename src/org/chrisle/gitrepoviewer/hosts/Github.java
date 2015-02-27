@@ -1,32 +1,41 @@
 package org.chrisle.gitrepoviewer.hosts;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeModel;
-
+import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.client.GitHubClient;
+import org.eclipse.egit.github.core.service.RepositoryService;
+import org.openide.util.Exceptions;
 /**
  *
  * @author chrl
  */
 public class Github implements IHost {
     private String _hostName;
+//    private String _userName;
+//    private String _password;
+    private GitHubClient _client;
+    private RepositoryService _repoService;
 
-    public Github(String _hostName) {
-        this._hostName = _hostName;
+    public Github(String hostName, String userName, String password) {
+        this._hostName = hostName;
+//        this._userName = userName;
+//        this._password = password;
+        
+        _client = new GitHubClient();
+        _client.setCredentials(userName, password);
+        _repoService = new RepositoryService();
     }
 
-    
-    // TODO: Change with Github API
-
     @Override
-    public List<String> getRepositories() {
-        return new ArrayList<String>() {{
-            add("Repo1");
-            add("Repo2");
-            add("Repo3");
-        }};
+    public List<Repository> getRepositories() {
+        try {
+            return _repoService.getRepositories(_client.getUser());
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+            return null;
+        }
     }
 
     @Override
