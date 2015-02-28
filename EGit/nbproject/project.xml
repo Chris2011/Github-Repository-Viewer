@@ -7,6 +7,12 @@
             <suite-component/>
             <module-dependencies/>
             <public-packages>
+                <package>com.google.gson</package>
+                <package>com.google.gson.annotations</package>
+                <package>com.google.gson.internal</package>
+                <package>com.google.gson.internal.bind</package>
+                <package>com.google.gson.reflect</package>
+                <package>com.google.gson.stream</package>
                 <package>org.eclipse.egit.github.core</package>
                 <package>org.eclipse.egit.github.core.client</package>
                 <package>org.eclipse.egit.github.core.event</package>
@@ -14,8 +20,8 @@
                 <package>org.eclipse.egit.github.core.util</package>
             </public-packages>
             <class-path-extension>
-                <runtime-relative-path>ext/org.eclipse.egit.github.core-3.7.0.201502260915-r.jar</runtime-relative-path>
-                <binary-origin>release/modules/ext/org.eclipse.egit.github.core-3.7.0.201502260915-r.jar</binary-origin>
+                <runtime-relative-path>ext/org.eclipse.egit.github.core-3.7.0-SNAPSHOT.jar</runtime-relative-path>
+                <binary-origin>release/modules/ext/org.eclipse.egit.github.core-3.7.0-SNAPSHOT.jar</binary-origin>
             </class-path-extension>
         </data>
     </configuration>
