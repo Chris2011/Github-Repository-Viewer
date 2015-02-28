@@ -5,6 +5,7 @@
  */
 package org.chrisle.gitrepoviewer.components;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -29,8 +30,8 @@ public class AddHostDialog extends javax.swing.JDialog {
         initComponents();
 
         hosts = new HashMap<String, IHost>() {{
-            IHost github = new Github("Github", _username.getText(), _password.getPassword().toString());
-            IHost bitbucket = new Bitbucket("Bitbucket", _username.getText(), _password.getPassword().toString());
+            IHost github = new Github("Github");
+            IHost bitbucket = new Bitbucket("Bitbucket");
 
             put(github.getHostName(), github);
             put(bitbucket.getHostName(), bitbucket);
@@ -159,13 +160,22 @@ public class AddHostDialog extends javax.swing.JDialog {
         if (!_username.getText().isEmpty() && _password.getPassword().length > 0) {
             Object selectedHost = _hostSelectBox.getSelectedItem();
             _selectedHost = hosts.get(selectedHost);
+            
+            _selectedHost.setUserCredentials(_username.getText(), Arrays.toString(_password.getPassword()));
 
             IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _username.getText()));
             DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
 
             if (_selectedHost.getRepositories() != null) {
                 _selectedHost.getRepositories().stream().forEach((host) -> {
-                    defaultMutableTreeNode.add(new DefaultMutableTreeNode(host));
+                    String privateIcon = "org/chrisle/gitrepoviewer/resources/private.png";
+
+                    if (!host.isPrivate()) {
+                        privateIcon = "org/chrisle/gitrepoviewer/resources/world.png";
+                    }
+                    
+                    IconData privateRepoIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(privateIcon)), host.getName());
+                    defaultMutableTreeNode.add(new DefaultMutableTreeNode(privateRepoIcon));
                 });
             }
 

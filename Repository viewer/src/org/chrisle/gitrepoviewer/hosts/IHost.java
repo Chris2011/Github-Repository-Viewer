@@ -8,6 +8,7 @@ import org.eclipse.egit.github.core.Repository;
  * @author chrl
  */
 public interface IHost {
+    public void setUserCredentials(String userName, String password);
     public List<Repository> getRepositories();
     public List<String> getBranches();
     public List<String> getTags();

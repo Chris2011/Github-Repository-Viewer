@@ -1,6 +1,5 @@
 package org.chrisle.gitrepoviewer.hosts;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.egit.github.core.Repository;
 
@@ -9,10 +8,15 @@ import org.eclipse.egit.github.core.Repository;
  * @author chrl
  */
 public class Bitbucket implements IHost {
-    private String _hostName;
+    private final String _hostName;
 
-    public Bitbucket(String hostName, String userName, String password) {
+    public Bitbucket(String hostName) {
         _hostName = hostName;
+    }
+
+    @Override
+    public void setUserCredentials(String userName, String password) {
+        
     }
 
     @Override

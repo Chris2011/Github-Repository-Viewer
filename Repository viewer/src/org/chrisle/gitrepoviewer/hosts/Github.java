@@ -1,7 +1,6 @@
 package org.chrisle.gitrepoviewer.hosts;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.client.GitHubClient;
@@ -12,20 +11,20 @@ import org.openide.util.Exceptions;
  * @author chrl
  */
 public class Github implements IHost {
-    private String _hostName;
-//    private String _userName;
-//    private String _password;
-    private GitHubClient _client;
-    private RepositoryService _repoService;
+    private final String _hostName;
+    private final GitHubClient _client;
+    private final RepositoryService _repoService;
 
-    public Github(String hostName, String userName, String password) {
+    public Github(String hostName) {
         this._hostName = hostName;
-//        this._userName = userName;
-//        this._password = password;
         
         _client = new GitHubClient();
-        _client.setCredentials(userName, password);
         _repoService = new RepositoryService();
+    }
+    
+    @Override
+    public void setUserCredentials(String userName, String password) {
+        _client.setCredentials(userName, password);
     }
 
     @Override
