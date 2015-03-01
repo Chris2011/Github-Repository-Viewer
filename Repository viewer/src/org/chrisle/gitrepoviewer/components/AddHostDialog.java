@@ -164,22 +164,31 @@ public class AddHostDialog extends javax.swing.JDialog {
             _selectedHost.setUserCredentials(_username.getText(), Arrays.toString(_password.getPassword()));
 
             IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _username.getText()));
-            DefaultMutableTreeNode defaultMutableTreeNode = new DefaultMutableTreeNode(hostIcon);
+            DefaultMutableTreeNode hostTreeNode = new DefaultMutableTreeNode(hostIcon);
 
             if (_selectedHost.getRepositories() != null) {
-                _selectedHost.getRepositories().stream().forEach((host) -> {
+                _selectedHost.getRepositories().stream().forEach((repo) -> {
                     String privateIcon = "org/chrisle/gitrepoviewer/resources/private.png";
 
-                    if (!host.isPrivate()) {
+                    if (!repo.isPrivate()) {
                         privateIcon = "org/chrisle/gitrepoviewer/resources/world.png";
                     }
                     
-                    IconData privateRepoIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(privateIcon)), host.getName());
-                    defaultMutableTreeNode.add(new DefaultMutableTreeNode(privateRepoIcon));
+                    IconData privateRepoIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(privateIcon)), repo.getName());
+                    final DefaultMutableTreeNode repoTreeNode = new DefaultMutableTreeNode(privateRepoIcon);
+                    hostTreeNode.add(repoTreeNode);
+                    
+                    if (_selectedHost.getBranches(repo) != null) {
+                        _selectedHost.getBranches(repo).stream().forEach((branch) -> {
+                            DefaultMutableTreeNode branchTreeNode = new DefaultMutableTreeNode(branch.getName());
+
+                            repoTreeNode.add(branchTreeNode);
+                        });
+                    }
                 });
             }
 
-            GitRepoViewerTopComponent.addTreeNode(defaultMutableTreeNode);
+            GitRepoViewerTopComponent.addTreeNode(hostTreeNode);
             this.setVisible(false);
         }
     }//GEN-LAST:event_addHostBtnActionPerformed
