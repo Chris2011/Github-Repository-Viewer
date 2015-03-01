@@ -1,7 +1,9 @@
 package org.chrisle.gitrepoviewer.hosts;
 
 import java.util.List;
+import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.RepositoryBranch;
 
 /**
  *
@@ -25,7 +27,7 @@ public class Bitbucket implements IHost {
     }
 
     @Override
-    public List<String> getBranches() {
+    public List<RepositoryBranch> getBranches(IRepositoryIdProvider repositoryId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

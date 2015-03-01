@@ -2,7 +2,9 @@ package org.chrisle.gitrepoviewer.hosts;
 
 import java.io.IOException;
 import java.util.List;
+import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
+import org.eclipse.egit.github.core.RepositoryBranch;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.openide.util.Exceptions;
@@ -38,8 +40,13 @@ public class Github implements IHost {
     }
 
     @Override
-    public List<String> getBranches() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<RepositoryBranch> getBranches(IRepositoryIdProvider repositoryId) {
+        try {
+            return _repoService.getBranches(repositoryId);
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+            return null;
+        }
     }
 
     @Override
