@@ -30,9 +30,9 @@ public class Github implements IHost {
     }
 
     @Override
-    public List<Repository> getRepositories() {
+    public List<Repository> getRepositories(String userName) {
         try {
-            return _repoService.getRepositories(_client.getUser());
+            return _repoService.getRepositories(userName);
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
             return null;
@@ -51,11 +51,6 @@ public class Github implements IHost {
 
     @Override
     public List<String> getTags() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Boolean isPrivate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

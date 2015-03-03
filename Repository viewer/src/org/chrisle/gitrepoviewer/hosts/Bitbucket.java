@@ -22,7 +22,7 @@ public class Bitbucket implements IHost {
     }
 
     @Override
-    public List<Repository> getRepositories() {
+    public List<Repository> getRepositories(String userName) {
         return null;
     }
 
@@ -33,11 +33,6 @@ public class Bitbucket implements IHost {
 
     @Override
     public List<String> getTags() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Boolean isPrivate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

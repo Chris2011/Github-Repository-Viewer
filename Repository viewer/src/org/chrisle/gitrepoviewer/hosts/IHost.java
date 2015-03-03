@@ -11,10 +11,9 @@ import org.eclipse.egit.github.core.RepositoryBranch;
  */
 public interface IHost {
     public void setUserCredentials(String userName, String password);
-    public List<Repository> getRepositories();
+    public List<Repository> getRepositories(String userName);
     public List<RepositoryBranch> getBranches(IRepositoryIdProvider repositoryId);
     public List<String> getTags();
-    public Boolean isPrivate();
     public String getHostName();
     public String getHostIcon();
 }
