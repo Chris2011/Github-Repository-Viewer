@@ -66,7 +66,7 @@ public class AddHostDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        _users = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -107,7 +107,7 @@ public class AddHostDialog extends javax.swing.JDialog {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.jLabel5.text")); // NOI18N
 
-        jTextField2.setText(org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog.jTextField2.text")); // NOI18N
+        _users.setText(org.openide.util.NbBundle.getMessage(AddHostDialog.class, "AddHostDialog._users.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,7 +117,7 @@ public class AddHostDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel5)
                 .addGap(28, 28, 28)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(_users, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,7 +126,7 @@ public class AddHostDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(_users, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -248,32 +248,35 @@ public class AddHostDialog extends javax.swing.JDialog {
             
             _selectedHost.setUserCredentials(_username.getText(), Arrays.toString(_password.getPassword()));
 
-            IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _username.getText()));
-            DefaultMutableTreeNode hostTreeNode = new DefaultMutableTreeNode(hostIcon);
+            if (!_users.getText().isEmpty()) {
+                IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _users.getText()));
+                DefaultMutableTreeNode hostTreeNode = new DefaultMutableTreeNode(hostIcon);
 
-            if (_selectedHost.getRepositories() != null) {
-                _selectedHost.getRepositories().stream().forEach((repo) -> {
-                    String privateIcon = "org/chrisle/gitrepoviewer/resources/private.png";
+                if (_selectedHost.getRepositories(_users.getText()) != null) {
+                    _selectedHost.getRepositories(_users.getText()).stream().forEach((repo) -> {
+                        String privateIcon = "org/chrisle/gitrepoviewer/resources/private.png";
 
-                    if (!repo.isPrivate()) {
-                        privateIcon = "org/chrisle/gitrepoviewer/resources/world.png";
-                    }
-                    
-                    IconData privateRepoIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(privateIcon)), repo.getName());
-                    final DefaultMutableTreeNode repoTreeNode = new DefaultMutableTreeNode(privateRepoIcon);
-                    hostTreeNode.add(repoTreeNode);
-                    
-                    if (_selectedHost.getBranches(repo) != null) {
-                        _selectedHost.getBranches(repo).stream().forEach((branch) -> {
-                            DefaultMutableTreeNode branchTreeNode = new DefaultMutableTreeNode(branch.getName());
+                        if (!repo.isPrivate()) {
+                            privateIcon = "org/chrisle/gitrepoviewer/resources/world.png";
+                        }
 
-                            repoTreeNode.add(branchTreeNode);
-                        });
-                    }
-                });
+                        IconData privateRepoIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(privateIcon)), repo.getName());
+                        final DefaultMutableTreeNode repoTreeNode = new DefaultMutableTreeNode(privateRepoIcon);
+                        hostTreeNode.add(repoTreeNode);
+                        
+                        if (_selectedHost.getBranches(repo) != null) {
+                            _selectedHost.getBranches(repo).stream().forEach((branch) -> {
+                                DefaultMutableTreeNode branchTreeNode = new DefaultMutableTreeNode(branch.getName());
+                                
+                                repoTreeNode.add(branchTreeNode);
+                            });
+                        }
+                    });
+                }
+
+                GitRepoViewerTopComponent.addTreeNode(hostTreeNode);
             }
 
-            GitRepoViewerTopComponent.addTreeNode(hostTreeNode);
             this.setVisible(false);
         }
     }//GEN-LAST:event_addHostBtnActionPerformed
@@ -329,6 +332,7 @@ public class AddHostDialog extends javax.swing.JDialog {
     private javax.swing.JPasswordField _password;
     private javax.swing.JRadioButton _userCredentialsBlock;
     private javax.swing.JTextField _username;
+    private javax.swing.JTextField _users;
     private javax.swing.JButton addHostBtn;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -341,6 +345,5 @@ public class AddHostDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
