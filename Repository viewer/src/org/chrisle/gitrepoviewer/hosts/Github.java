@@ -7,6 +7,7 @@ import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
+import org.eclipse.egit.github.core.service.UserService;
 import org.openide.util.Exceptions;
 /**
  *
@@ -27,6 +28,27 @@ public class Github implements IHost {
     @Override
     public void setUserCredentials(String userName, String password) {
         _client.setCredentials(userName, password);
+        
+        UserService user = new UserService(_client);
+        
+        try {
+            user.getUser();
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }
+
+    @Override
+    public void setToken(String token) {
+        _client.setOAuth2Token(token);
+        
+        UserService user = new UserService(_client);
+        
+        try {
+            user.getUser();
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 
     @Override

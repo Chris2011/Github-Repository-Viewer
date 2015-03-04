@@ -22,6 +22,11 @@ public class Bitbucket implements IHost {
     }
 
     @Override
+    public void setToken(String token) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
     public List<Repository> getRepositories(String userName) {
         return null;
     }
