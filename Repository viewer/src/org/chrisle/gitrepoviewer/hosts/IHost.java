@@ -10,8 +10,7 @@ import org.eclipse.egit.github.core.RepositoryBranch;
  * @author chrl
  */
 public interface IHost {
-    public void setUserCredentials(String userName, String password);
-    public void setToken(String token);
+    public void setToken(String userName, String token);
     public List<Repository> getRepositories(String userName);
     public List<RepositoryBranch> getBranches(IRepositoryIdProvider repositoryId);
     public List<String> getTags();

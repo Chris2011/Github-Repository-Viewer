@@ -17,12 +17,7 @@ public class Bitbucket implements IHost {
     }
 
     @Override
-    public void setUserCredentials(String userName, String password) {
-        
-    }
-
-    @Override
-    public void setToken(String token) {
+    public void setToken(String userName, String token) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

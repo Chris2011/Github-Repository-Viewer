@@ -5,6 +5,7 @@ import java.util.List;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
+import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
 import org.eclipse.egit.github.core.service.UserService;
@@ -24,28 +25,20 @@ public class Github implements IHost {
         _client = new GitHubClient();
         _repoService = new RepositoryService();
     }
-    
-    @Override
-    public void setUserCredentials(String userName, String password) {
-        _client.setCredentials(userName, password);
-        
-        UserService user = new UserService(_client);
-        
-        try {
-            user.getUser();
-        } catch (IOException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-    }
 
     @Override
-    public void setToken(String token) {
+    public void setToken(String userName, String token) {
         _client.setOAuth2Token(token);
         
         UserService user = new UserService(_client);
         
         try {
-            user.getUser();
+            User userClient = user.getUser();
+            String login = userClient.getLogin();
+            
+            if (!login.equals(userName)) {
+                throw new IOException("Your credentials are wrong.");
+            }
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
         }
