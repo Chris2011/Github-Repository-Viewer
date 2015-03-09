@@ -31,7 +31,7 @@
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="errorMessage" min="-2" max="-2" attributes="0"/>
+                          <Component id="_errorMessage" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -48,7 +48,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              <Component id="errorMessage" min="-2" max="-2" attributes="0"/>
+              <Component id="_errorMessage" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -66,10 +66,10 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="errorMessage">
+    <Component class="javax.swing.JLabel" name="_errorMessage">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/chrisle/gitrepoviewer/components/Bundle.properties" key="ErrorDialog.errorMessage.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="org/chrisle/gitrepoviewer/components/Bundle.properties" key="ErrorDialog._errorMessage.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <AuxValues>

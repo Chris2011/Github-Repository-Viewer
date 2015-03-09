@@ -29,7 +29,7 @@ public class ErrorDialog extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        errorMessage = new javax.swing.JLabel();
+        _errorMessage = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -37,7 +37,7 @@ public class ErrorDialog extends javax.swing.JDialog {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ErrorDialog.class, "ErrorDialog.jLabel1.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(errorMessage, org.openide.util.NbBundle.getMessage(ErrorDialog.class, "ErrorDialog.errorMessage.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(_errorMessage, org.openide.util.NbBundle.getMessage(ErrorDialog.class, "ErrorDialog._errorMessage.text")); // NOI18N
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(ErrorDialog.class, "ErrorDialog.jButton1.text")); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -55,7 +55,7 @@ public class ErrorDialog extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(173, 173, 173)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(errorMessage)
+                            .addComponent(_errorMessage)
                             .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(160, 160, 160)
@@ -66,7 +66,7 @@ public class ErrorDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(errorMessage)
+                .addComponent(_errorMessage)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
@@ -81,8 +81,8 @@ public class ErrorDialog extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public static void setErrorMessage(String error) {
-        errorMessage.setText(error);
+    public void setErrorMessage(String error) {
+        _errorMessage.setText(error);
     }
     
     /**
@@ -128,7 +128,7 @@ public class ErrorDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private static javax.swing.JLabel errorMessage;
+    private static javax.swing.JLabel _errorMessage;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

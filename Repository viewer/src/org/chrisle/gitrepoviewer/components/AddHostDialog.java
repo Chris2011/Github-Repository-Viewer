@@ -246,7 +246,9 @@ public class AddHostDialog extends javax.swing.JDialog {
 
                 this.setVisible(false);
             } catch (Exception ex) {
-                ErrorDialog.setErrorMessage(ex.getMessage());
+                ErrorDialog errorDialog = new ErrorDialog(null, true);
+                errorDialog.setErrorMessage(ex.getMessage());
+                errorDialog.setVisible(true);
             }
         }
     }//GEN-LAST:event_addHostBtnActionPerformed
