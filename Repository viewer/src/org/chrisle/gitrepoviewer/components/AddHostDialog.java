@@ -34,7 +34,7 @@ public class AddHostDialog extends javax.swing.JDialog {
             IHost bitbucket = new Bitbucket("Bitbucket");
 
             put(github.getHostName(), github);
-            put(bitbucket.getHostName(), bitbucket);
+//            put(bitbucket.getHostName(), bitbucket);
         }};
 
         _hostSelectBox.removeAllItems();
@@ -146,8 +146,8 @@ public class AddHostDialog extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4))
-                .addGap(51, 51, 51)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(42, 42, 42)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(_authToken, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_username, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -208,42 +208,46 @@ public class AddHostDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addHostBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostBtnActionPerformed
-        if (!_username.getText().isEmpty() && _authToken.getText().isEmpty()) {
+        if (!_username.getText().isEmpty() && !_authToken.getText().isEmpty()) {
             Object selectedHost = _hostSelectBox.getSelectedItem();
             _selectedHost = hosts.get(selectedHost);
-            
-            _selectedHost.setToken(_username.getText(), _authToken.getText());
 
-            if (!_users.getText().isEmpty()) {
-                IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _users.getText()));
-                DefaultMutableTreeNode hostTreeNode = new DefaultMutableTreeNode(hostIcon);
+            try {
+                _selectedHost.setToken(_username.getText(), _authToken.getText());
 
-                if (_selectedHost.getRepositories(_users.getText()) != null) {
-                    _selectedHost.getRepositories(_users.getText()).stream().forEach((repo) -> {
-                        String privateIcon = "org/chrisle/gitrepoviewer/resources/private.png";
+                if (!_users.getText().isEmpty()) {
+                    IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _users.getText()));
+                    DefaultMutableTreeNode hostTreeNode = new DefaultMutableTreeNode(hostIcon);
+                    
+                    if (_selectedHost.getRepositories(_users.getText()) != null) {
+                        _selectedHost.getRepositories(_users.getText()).stream().forEach((repo) -> {
+                            String privateIcon = "org/chrisle/gitrepoviewer/resources/private.png";
 
-                        if (!repo.isPrivate()) {
-                            privateIcon = "org/chrisle/gitrepoviewer/resources/world.png";
-                        }
+                            if (!repo.isPrivate()) {
+                                privateIcon = "org/chrisle/gitrepoviewer/resources/world.png";
+                            }
 
-                        IconData privateRepoIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(privateIcon)), repo.getName());
-                        final DefaultMutableTreeNode repoTreeNode = new DefaultMutableTreeNode(privateRepoIcon);
-                        hostTreeNode.add(repoTreeNode);
-                        
-                        if (_selectedHost.getBranches(repo) != null) {
-                            _selectedHost.getBranches(repo).stream().forEach((branch) -> {
-                                DefaultMutableTreeNode branchTreeNode = new DefaultMutableTreeNode(branch.getName());
-                                
-                                repoTreeNode.add(branchTreeNode);
-                            });
-                        }
-                    });
+                            IconData privateRepoIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(privateIcon)), repo.getName());
+                            final DefaultMutableTreeNode repoTreeNode = new DefaultMutableTreeNode(privateRepoIcon);
+                            hostTreeNode.add(repoTreeNode);
+
+                            if (_selectedHost.getBranches(repo) != null) {
+                                _selectedHost.getBranches(repo).stream().forEach((branch) -> {
+                                    DefaultMutableTreeNode branchTreeNode = new DefaultMutableTreeNode(branch.getName());
+
+                                    repoTreeNode.add(branchTreeNode);
+                                });
+                            }
+                        });
+                    }
+
+                    GitRepoViewerTopComponent.addTreeNode(hostTreeNode);
                 }
 
-                GitRepoViewerTopComponent.addTreeNode(hostTreeNode);
+                this.setVisible(false);
+            } catch (Exception ex) {
+                ErrorDialog.setErrorMessage(ex.getMessage());
             }
-
-            this.setVisible(false);
         }
     }//GEN-LAST:event_addHostBtnActionPerformed
 
