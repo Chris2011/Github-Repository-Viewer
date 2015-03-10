@@ -28,15 +28,15 @@ import org.openide.util.datatransfer.NewType;
 //)
 @ActionReference(path = "Menu/Tools", position = 805)
 @Messages({
-    "CTL_GitRepoViewerServiceNode=Git Repo Viewer",
-    "HINT_GitRepoViewerServiceNode=Shows all currently set system properties."
+    "CTL_GitRepoViewerServiceNode=Git Repositories",
+    "HINT_GitRepoViewerServiceNode=See all repositories of a host account (Github, BitBucket)"
 })
 
 @ServicesTabNodeRegistration(
         name = "GitRepoViewerNode",
-        displayName = "Git Repo Viewer",
+        displayName = "Git Repositories",
         shortDescription = "See all repositories of a host account (Github, BitBucket)",
-        iconResource = "org/myorg/systemproperties/allPropsIcon.gif",
+        iconResource = "org/chrisle/gitrepoviewer/resources/world.png",
         position = 2021)
 public class GitRepoViewerNode extends AbstractNode {
     public GitRepoViewerNode() {
@@ -45,12 +45,12 @@ public class GitRepoViewerNode extends AbstractNode {
 //        setShortDescription(Bundle.HINT_AllPropsNode());
         setDisplayName("Git Repository Viewer");
         setShortDescription("See all repositories of a host account (Github, BitBucket)");
-        setIconBaseWithExtension("org/myorg/systemproperties/allPropsIcon.gif");
+        setIconBaseWithExtension("org/chrisle/gitrepoviewer/resources/world.png");
     }
 
     @Override
     public Action[] getActions(boolean context) {
-        Action[] result = new Action[]{
+        Action[] result = new Action[] {
             new RefreshPropsAction(),
             null,
             SystemAction.get(OpenLocalExplorerAction.class),
