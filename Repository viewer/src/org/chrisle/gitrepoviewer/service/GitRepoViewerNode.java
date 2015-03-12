@@ -1,4 +1,4 @@
-package org.chrisle.gitrepoviewer.components;
+package org.chrisle.gitrepoviewer.service;
 
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -20,8 +20,8 @@ import org.openide.util.actions.SystemAction;
 import org.openide.util.datatransfer.NewType;
 
 @ActionID(
-        category = "Team",
-        id = "org.chrisle.gitrepoviewer.components.GitRepoViewerNode"
+    category = "Team",
+    id = "org.chrisle.gitrepoviewer.components.GitRepoViewerNode"
 )
 //@ActionRegistration(
 //        displayName = "#CTL_GitRepoViewerNode"
@@ -51,14 +51,8 @@ public class GitRepoViewerNode extends AbstractNode {
     @Override
     public Action[] getActions(boolean context) {
         Action[] result = new Action[] {
-            new RefreshPropsAction(),
-            null,
-            SystemAction.get(OpenLocalExplorerAction.class),
-            null,
-            SystemAction.get(NewAction.class),
-            null,
-            SystemAction.get(ToolsAction.class),
-            SystemAction.get(PropertiesAction.class),};
+            new AddHostAction()
+        };
         return result;
     }
 
