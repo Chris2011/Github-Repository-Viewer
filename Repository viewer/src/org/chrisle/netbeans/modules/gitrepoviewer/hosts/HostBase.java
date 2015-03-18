@@ -1,4 +1,4 @@
-package org.chrisle.netbeans.modules.gitrepoviewer.service;
+package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +54,21 @@ public class HostBase implements IHost {
 
     @Override
     public void saveHost(HostBase host) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveRepository(Object repository) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveBranch(String repositoryId) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveTag(String repositoryId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

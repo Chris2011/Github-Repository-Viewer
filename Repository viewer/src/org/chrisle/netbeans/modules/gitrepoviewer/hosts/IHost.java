@@ -1,7 +1,6 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
 
 import java.util.List;
-import org.chrisle.netbeans.modules.gitrepoviewer.service.HostBase;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
@@ -12,11 +11,19 @@ import org.eclipse.egit.github.core.RepositoryBranch;
  */
 public interface IHost {
     public void saveUserCredentials(String userName, String authToken);
+
     public List<Repository> getRepositories(String userName);
+    public void saveRepository(Object repository);
+
     public List<RepositoryBranch> getBranches(IRepositoryIdProvider repositoryId);
+    public void saveBranch(String repositoryId);
+
     public List<String> getTags();
+    public void saveTag(String repositoryId);
+
     public String getHostName();
     public String setHostName(String hostName);
+
     public String getHostIcon();
 
     /**

@@ -1,7 +1,6 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
 
 import java.util.List;
-import org.chrisle.netbeans.modules.gitrepoviewer.service.HostBase;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;

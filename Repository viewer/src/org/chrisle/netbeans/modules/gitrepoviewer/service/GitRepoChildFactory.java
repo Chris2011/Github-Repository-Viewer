@@ -4,6 +4,7 @@ package org.chrisle.netbeans.modules.gitrepoviewer.service;
  *
  * @author chrl
  */
+import org.chrisle.netbeans.modules.gitrepoviewer.hosts.HostBase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
