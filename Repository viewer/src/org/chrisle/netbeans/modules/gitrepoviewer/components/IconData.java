@@ -1,4 +1,4 @@
-package org.chrisle.gitrepoviewer.components;
+package org.chrisle.netbeans.modules.gitrepoviewer.components;
 
 import javax.swing.Icon;
 

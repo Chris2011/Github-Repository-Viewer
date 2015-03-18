@@ -1,4 +1,4 @@
-package org.chrisle.gitrepoviewer.service;
+package org.chrisle.netbeans.modules.gitrepoviewer.service;
 
 /**
  *
@@ -7,8 +7,8 @@ package org.chrisle.gitrepoviewer.service;
 import javax.swing.event.ChangeListener;
 import org.openide.util.ChangeSupport;
 
-public class PropertiesNotifier {
-    private static final ChangeSupport cs = new ChangeSupport(PropertiesNotifier.class);
+public class HostNotifier {
+    private static final ChangeSupport cs = new ChangeSupport(HostNotifier.class);
 
     public static void addChangeListener(ChangeListener listener) {
         cs.addChangeListener(listener);

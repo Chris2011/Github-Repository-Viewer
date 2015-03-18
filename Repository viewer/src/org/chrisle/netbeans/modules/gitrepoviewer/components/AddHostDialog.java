@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.chrisle.gitrepoviewer.components;
+package org.chrisle.netbeans.modules.gitrepoviewer.components;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.chrisle.gitrepoviewer.hosts.Bitbucket;
-import org.chrisle.gitrepoviewer.hosts.Github;
-import org.chrisle.gitrepoviewer.hosts.IHost;
+import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Bitbucket;
+import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Github;
+import org.chrisle.netbeans.modules.gitrepoviewer.hosts.IHost;
 import org.openide.util.ImageUtilities;
 
 /**
@@ -213,7 +212,7 @@ public class AddHostDialog extends javax.swing.JDialog {
             _selectedHost = hosts.get(selectedHost);
 
             try {
-                _selectedHost.setToken(_username.getText(), _authToken.getText());
+                _selectedHost.saveUserCredentials(_username.getText(), _authToken.getText());
 
                 if (!_users.getText().isEmpty()) {
                     IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _users.getText()));

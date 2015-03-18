@@ -69,7 +69,7 @@
       <Properties>
         <Property name="mnemonic" type="int" value="111"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/chrisle/gitrepoviewer/components/Bundle.properties" key="GitRepoViewerTopComponent._addHost.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="org/chrisle/netbeans/modules/gitrepoviewer/components/Bundle.properties" key="GitRepoViewerTopComponent._addHost.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
       </Properties>
       <Events>
@@ -80,7 +80,7 @@
       <Properties>
         <Property name="mnemonic" type="int" value="109"/>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="org/chrisle/gitrepoviewer/components/Bundle.properties" key="GitRepoViewerTopComponent._removeHost.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
+          <ResourceString bundle="org/chrisle/netbeans/modules/gitrepoviewer/components/Bundle.properties" key="GitRepoViewerTopComponent._removeHost.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
         </Property>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>

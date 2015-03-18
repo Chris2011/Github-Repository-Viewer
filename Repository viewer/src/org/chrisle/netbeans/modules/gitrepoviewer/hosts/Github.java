@@ -1,9 +1,9 @@
-package org.chrisle.gitrepoviewer.hosts;
+package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
 
 import java.io.IOException;
 import java.util.List;
-import org.chrisle.gitrepoviewer.components.AddHostDialog;
-import org.chrisle.gitrepoviewer.components.ErrorDialog;
+import org.chrisle.netbeans.modules.gitrepoviewer.components.ErrorDialog;
+import org.chrisle.netbeans.modules.gitrepoviewer.service.HostBase;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
@@ -15,7 +15,7 @@ import org.eclipse.egit.github.core.service.UserService;
  *
  * @author chrl
  */
-public class Github implements IHost {
+public class Github extends HostBase {
     private final String _hostName;
     private final GitHubClient _client;
     private final RepositoryService _repoService;
@@ -31,7 +31,7 @@ public class Github implements IHost {
     }
 
     @Override
-    public void setToken(String userName, String token) {
+    public void saveUserCredentials(String userName, String token) {
         _client.setOAuth2Token(token);
 
         UserService user = new UserService(_client);

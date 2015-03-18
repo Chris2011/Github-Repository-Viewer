@@ -1,6 +1,7 @@
-package org.chrisle.gitrepoviewer.hosts;
+package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
 
 import java.util.List;
+import org.chrisle.netbeans.modules.gitrepoviewer.service.HostBase;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
@@ -9,16 +10,11 @@ import org.eclipse.egit.github.core.RepositoryBranch;
  *
  * @author chrl
  */
-public class Bitbucket implements IHost {
+public class Bitbucket extends HostBase {
     private final String _hostName;
 
     public Bitbucket(String hostName) {
         _hostName = hostName;
-    }
-
-    @Override
-    public void setToken(String userName, String token) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
