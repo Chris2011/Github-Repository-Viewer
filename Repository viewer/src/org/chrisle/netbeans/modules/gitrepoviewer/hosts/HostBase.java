@@ -1,15 +1,17 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
 
+import com.google.gson.Gson;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.chrisle.netbeans.modules.gitrepoviewer.hosts.IHost;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
 
 /**
  *
- * @author chrl
+ * @author Chris
  */
 public class HostBase implements IHost {
     @Override
@@ -49,7 +51,18 @@ public class HostBase implements IHost {
 
     @Override
     public void saveUserCredentials(String userName, String authToken) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        User user = new User(userName, authToken);
+        Gson gson = new Gson();
+
+        String userJson = gson.toJson(user);
+
+        try {
+            FileWriter writer = new FileWriter(System.getProperty("user.home") + this.getHostName() + "User.json");
+            writer.write(userJson);
+            writer.close();
+        } catch(IOException e) {
+            
+        }
     }
 
     @Override
