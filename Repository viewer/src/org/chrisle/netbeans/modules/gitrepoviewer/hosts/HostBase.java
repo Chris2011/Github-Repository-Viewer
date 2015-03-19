@@ -2,7 +2,6 @@ package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
 
 import com.google.gson.Gson;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.chrisle.netbeans.modules.gitrepoviewer.components.ErrorDialog;
