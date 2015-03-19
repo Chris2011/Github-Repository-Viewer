@@ -4,8 +4,7 @@ package org.chrisle.netbeans.modules.gitrepoviewer.components;
  *
  * @author chrl
  */
-public class ErrorDialog extends javax.swing.JDialog {
-
+public final class ErrorDialog extends javax.swing.JDialog {
     /**
      * Creates new form ErrorDialog
      */

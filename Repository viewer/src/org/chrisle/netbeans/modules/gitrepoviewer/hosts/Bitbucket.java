@@ -40,4 +40,9 @@ public class Bitbucket extends HostBase {
     public String getHostIcon() {
         return "org/chrisle/gitrepoviewer/resources/bitbucket.png";
     }
+
+    @Override
+    public void setUserCredentials(String userName, String authToken) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

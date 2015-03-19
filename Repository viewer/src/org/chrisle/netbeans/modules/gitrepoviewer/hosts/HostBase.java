@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.chrisle.netbeans.modules.gitrepoviewer.components.ErrorDialog;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
@@ -52,11 +53,13 @@ public abstract class HostBase implements IHost {
         String userJson = gson.toJson(user);
 
         try {
-            FileWriter writer = new FileWriter(System.getProperty("user.home") + this.getHostName() + "User.json");
+            FileWriter writer = new FileWriter(System.getProperty("user.home") + "\\.GitRepoViewer\\" + this.getHostName() + "User.json");
             writer.write(userJson);
             writer.close();
-        } catch(IOException e) {
-            
+        } catch(Exception e) {
+            ErrorDialog test = new ErrorDialog(null, true);
+            test.setErrorMessage(e.getMessage());
+            test.setVisible(true);
         }
     }
 

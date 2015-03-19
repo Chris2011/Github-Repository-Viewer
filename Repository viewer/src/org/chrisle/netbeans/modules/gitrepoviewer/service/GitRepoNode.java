@@ -24,7 +24,7 @@ import org.openide.util.lookup.Lookups;
         name = "GitRepoNode",
         displayName = "Git Repositories",
         shortDescription = "See all git repositories of a host account (Github, BitBucket)",
-        iconResource = "org/chrisle/gitrepoviewer/resources/world.png",
+        iconResource = "org/chrisle/netbeans/modules/gitrepoviewer/resources/world.png",
         position = 2021)
 public class GitRepoNode extends AbstractNode {
     public GitRepoNode(Children children) {
@@ -38,7 +38,7 @@ public class GitRepoNode extends AbstractNode {
 //        setShortDescription(Bundle.HINT_AllPropsNode());
         setDisplayName("Git Repository");
         setShortDescription("See all repositories of a host account (Github, BitBucket)");
-        setIconBaseWithExtension("org/chrisle/gitrepoviewer/resources/world.png");
+        setIconBaseWithExtension("org/chrisle/netbeans/modules/gitrepoviewer/resources/world.png");
     }
 
     @Override

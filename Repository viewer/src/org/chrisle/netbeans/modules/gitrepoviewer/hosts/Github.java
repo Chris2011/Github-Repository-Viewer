@@ -32,6 +32,7 @@ public class Github extends HostBase {
     @Override
     public void setUserCredentials(String userName, String token) {
         _client.setOAuth2Token(token);
+        super.saveUserCredentials(userName, token);
 
         UserService user = new UserService(_client);
         try {
