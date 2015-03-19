@@ -7,9 +7,10 @@ import org.eclipse.egit.github.core.RepositoryBranch;
 
 /**
  *
- * @author chrl
+ * @author Chris
  */
 public interface IHost {
+    public void setUserCredentials(String userName, String authToken);
     public void saveUserCredentials(String userName, String authToken);
 
     public List<Repository> getRepositories(String userName);
@@ -22,7 +23,6 @@ public interface IHost {
     public void saveTag(String repositoryId);
 
     public String getHostName();
-    public String setHostName(String hostName);
 
     public String getHostIcon();
 

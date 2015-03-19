@@ -13,7 +13,7 @@ import org.eclipse.egit.github.core.RepositoryBranch;
  *
  * @author Chris
  */
-public class HostBase implements IHost {
+public abstract class HostBase implements IHost {
     @Override
     public List<Repository> getRepositories(String userName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -36,11 +36,6 @@ public class HostBase implements IHost {
 
     @Override
     public String getHostIcon() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String setHostName(String hostName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -84,4 +79,7 @@ public class HostBase implements IHost {
     public void saveTag(String repositoryId) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public abstract void setUserCredentials(String userName, String authToken);
 }

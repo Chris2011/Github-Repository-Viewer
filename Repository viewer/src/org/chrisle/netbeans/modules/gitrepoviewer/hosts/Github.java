@@ -12,7 +12,7 @@ import org.eclipse.egit.github.core.service.RepositoryService;
 import org.eclipse.egit.github.core.service.UserService;
 /**
  *
- * @author chrl
+ * @author Chris
  */
 public class Github extends HostBase {
     private final String _hostName;
@@ -30,7 +30,7 @@ public class Github extends HostBase {
     }
 
     @Override
-    public void saveUserCredentials(String userName, String token) {
+    public void setUserCredentials(String userName, String token) {
         _client.setOAuth2Token(token);
 
         UserService user = new UserService(_client);
@@ -41,6 +41,8 @@ public class Github extends HostBase {
             if (!login.equals(userName)) {
                 throw new IOException("Your credentials are wrong.");
             }
+
+            super.saveUserCredentials(login, token);
         } catch (IOException ex) {
             _errorDialog.setErrorMessage(ex.getMessage());
             _errorDialog.setVisible(true);

@@ -212,7 +212,7 @@ public class AddHostDialog extends javax.swing.JDialog {
             _selectedHost = hosts.get(selectedHost);
 
             try {
-                _selectedHost.saveUserCredentials(_username.getText(), _authToken.getText());
+                _selectedHost.setUserCredentials(_username.getText(), _authToken.getText());
 
                 if (!_users.getText().isEmpty()) {
                     IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _users.getText()));
