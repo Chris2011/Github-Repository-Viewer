@@ -1,6 +1,7 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
 
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +53,14 @@ public abstract class HostBase implements IHost {
         String userJson = gson.toJson(user);
 
         try {
-            FileWriter writer = new FileWriter(System.getProperty("user.home") + "\\.GitRepoViewer\\" + this.getHostName() + "User.json");
-            writer.write(userJson);
-            writer.close();
+            File dir = new File(System.getProperty("user.home") + "\\.GitRepoViewer");
+            dir.mkdir();
+
+            File file = new File(dir,  this.getHostName() + "User.json");
+            FileWriter fileWriter = new FileWriter(file);
+
+            fileWriter.write(userJson);
+            fileWriter.close();
         } catch(Exception e) {
             ErrorDialog test = new ErrorDialog(null, true);
             test.setErrorMessage(e.getMessage());
