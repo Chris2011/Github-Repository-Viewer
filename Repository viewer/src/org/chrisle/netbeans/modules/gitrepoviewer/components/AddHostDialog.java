@@ -5,21 +5,30 @@
  */
 package org.chrisle.netbeans.modules.gitrepoviewer.components;
 
+import com.google.gson.Gson;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Bitbucket;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Github;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.IHost;
+import org.chrisle.netbeans.modules.gitrepoviewer.hosts.User;
+import org.openide.util.Exceptions;
 import org.openide.util.ImageUtilities;
+
 
 /**
  *
  * @author chrl
  */
 public class AddHostDialog extends javax.swing.JDialog {
-    private final Map<String, IHost> hosts;
+    private final Map<String, IHost> _hosts;
     private IHost _selectedHost;
+    private User _userCredentials;
+    private final ErrorDialog _errorDialog;
 
     /**
      * Creates new form HostsDialog
@@ -27,21 +36,45 @@ public class AddHostDialog extends javax.swing.JDialog {
     public AddHostDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
-        hosts = new HashMap<String, IHost>() {{
+        
+        _errorDialog = new ErrorDialog(null, true);
+        _hosts = new HashMap<String, IHost>() {{
             IHost github = new Github("Github");
             IHost bitbucket = new Bitbucket("Bitbucket");
 
             put(github.getHostName(), github);
-//            put(bitbucket.getHostName(), bitbucket);
+            put(bitbucket.getHostName(), bitbucket);
         }};
 
         _hostSelectBox.removeAllItems();
         fillHostSelectBox();
+        
+        Object selectedHost = _hostSelectBox.getSelectedItem();
+        _selectedHost = _hosts.get(selectedHost);
+
+        getUserFromFile();
+    }
+
+    private void getUserFromFile() {
+        try {
+            FileReader account = new FileReader(System.getProperty("user.home") + "\\.GitRepoViewer\\" + _selectedHost.getHostName() + "User.json");
+            Gson userJson = new Gson();
+
+            _userCredentials = userJson.fromJson(account, User.class);
+            account.close();
+
+            _username.setText(_userCredentials.getUserName());
+            _authToken.setText(_userCredentials.getAuthToken());
+        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
+            _errorDialog.setErrorMessage(ex.getMessage());
+            _errorDialog.setVisible(true);
+        }
+        
     }
 
     private void fillHostSelectBox() {
-        for (String host : hosts.keySet()) {
+        for (String host : _hosts.keySet()) {
             _hostSelectBox.addItem(host);
         }
     }
@@ -208,9 +241,6 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     private void addHostBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostBtnActionPerformed
         if (!_username.getText().isEmpty() && !_authToken.getText().isEmpty()) {
-            Object selectedHost = _hostSelectBox.getSelectedItem();
-            _selectedHost = hosts.get(selectedHost);
-
             try {
                 _selectedHost.setUserCredentials(_username.getText(), _authToken.getText());
 
@@ -241,13 +271,11 @@ public class AddHostDialog extends javax.swing.JDialog {
                     }
 
                     GitRepoViewerTopComponent.addTreeNode(hostTreeNode);
+                    this.setVisible(false);
                 }
-
-                this.setVisible(false);
             } catch (Exception ex) {
-                ErrorDialog errorDialog = new ErrorDialog(null, true);
-                errorDialog.setErrorMessage(ex.getMessage());
-                errorDialog.setVisible(true);
+                _errorDialog.setErrorMessage(ex.getMessage());
+                _errorDialog.setVisible(true);
             }
         }
     }//GEN-LAST:event_addHostBtnActionPerformed
