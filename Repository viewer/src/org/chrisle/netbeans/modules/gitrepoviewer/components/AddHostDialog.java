@@ -16,11 +16,9 @@ import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Bitbucket;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Github;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.IHost;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.User;
-import org.netbeans.api.project.Project;
-import org.openide.nodes.Node;
+//import org.netbeans.modules.project.ui.ProjectTab;
 import org.openide.util.ImageUtilities;
-import org.openide.util.Lookup;
-import org.openide.util.Utilities;
+
 
 
 /**
@@ -246,13 +244,6 @@ public class AddHostDialog extends javax.swing.JDialog {
         if (!_username.getText().isEmpty() && !_authToken.getText().isEmpty()) {
             try {
                 _selectedHost.setUserCredentials(_username.getText(), _authToken.getText());
-
-                // TODO: Test.
-                Lookup projectsTab = Utilities.actionsGlobalContext();
-                Project lookup = projectsTab.lookup(Project.class);
-                
-                Lookup test = Utilities.actionsGlobalContext();
-                Node lookup1 = test.lookup(Node.class);
 
                 if (!_users.getText().isEmpty()) {
                     IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _users.getText()));
