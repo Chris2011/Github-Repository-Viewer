@@ -14,7 +14,7 @@ import org.eclipse.egit.github.core.RepositoryBranch;
  *
  * @author Chris
  */
-public abstract class HostBase implements IHost {
+public class HostBase implements IHost {
     @Override
     public List<Repository> getRepositories(String userName) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -89,5 +89,7 @@ public abstract class HostBase implements IHost {
     }
 
     @Override
-    public abstract void setUserCredentials(String userName, String authToken);
+    public void setUserCredentials(String userName, String authToken) {
+        // TODO: Will be overriden.
+    }
 }

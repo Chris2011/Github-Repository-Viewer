@@ -4,16 +4,18 @@ package org.chrisle.netbeans.modules.gitrepoviewer.service;
  *
  * @author chrl
  */
+import java.awt.Event;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.HostBase;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Github;
+import org.openide.nodes.AbstractNode;
 import org.openide.nodes.ChildFactory;
+import org.openide.nodes.Children;
 import org.openide.nodes.Node;
+import org.openide.util.lookup.Lookups;
 
 public class GitRepoChildFactory extends ChildFactory<HostBase> {
 
@@ -35,33 +37,24 @@ public class GitRepoChildFactory extends ChildFactory<HostBase> {
         }
     }
 
-    protected Node createNodeForKey(String key) {
-        return new HostNode(key);
-    }
-
-//    @Override
-//    protected boolean createKeys(List<String> toPopulate) {
-//        List<String> keys = new ArrayList<>();
-//
-//        Set<Object> test = new HashSet<>();
-//        test.add("1");
-//        test.add("2");
-//        test.add("3");
-//        test.add("4");
-//
-//        for (Object prop : test) {
-//            keys.add((String) prop);
-//        }
-//
-//        Collections.sort(keys);
-//        toPopulate.addAll(keys);
-//
-//        return true;
-//    }
-
     @Override
-    protected boolean createKeys(List<HostBase> list) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected boolean createKeys(List<HostBase> hosts) {
+        HostBase[] objs = new HostBase[5];
+        for (int i = 0; i < objs.length; i++) {
+            objs[i] = new Github("Github");
+        }
+
+        hosts.addAll(Arrays.asList(objs));
+
+        return true;
     }
 
+    protected Node createNodeForKey(Event key) {
+        Node result = new AbstractNode(
+        Children.create(new GitRepoChildFactory(), true), 
+        Lookups.singleton(key));
+        result.setDisplayName(key.toString());
+
+        return result;
+    }
 }
