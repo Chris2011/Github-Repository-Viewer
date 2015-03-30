@@ -36,7 +36,7 @@ public class GitRepoNode extends AbstractNode {
         super(Children.create(new GitRepoChildFactory(), true));
 //        setDisplayName(Bundle.LBL_AllPropsNode());
 //        setShortDescription(Bundle.HINT_AllPropsNode());
-        setDisplayName("Git Repository");
+        setDisplayName("Git Repositories");
         setShortDescription("See all repositories of a host account (Github, BitBucket)");
         setIconBaseWithExtension("org/chrisle/netbeans/modules/gitrepoviewer/resources/world.png");
     }

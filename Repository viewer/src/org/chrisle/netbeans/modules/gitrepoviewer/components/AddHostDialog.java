@@ -16,7 +16,6 @@ import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Bitbucket;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Github;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.IHost;
 import org.chrisle.netbeans.modules.gitrepoviewer.hosts.User;
-//import org.netbeans.modules.project.ui.ProjectTab;
 import org.openide.util.ImageUtilities;
 
 

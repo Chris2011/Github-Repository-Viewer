@@ -49,7 +49,8 @@ public class GitRepoChildFactory extends ChildFactory<HostBase> {
         return true;
     }
 
-    protected Node createNodeForKey(Event key) {
+    @Override
+    protected Node createNodeForKey(HostBase key) {
         Node result = new AbstractNode(
         Children.create(new GitRepoChildFactory(), true), 
         Lookups.singleton(key));
