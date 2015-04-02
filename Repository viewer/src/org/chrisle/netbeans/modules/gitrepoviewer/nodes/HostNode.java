@@ -1,27 +1,31 @@
-package org.chrisle.netbeans.modules.gitrepoviewer.service;
+package org.chrisle.netbeans.modules.gitrepoviewer.nodes;
 
 /**
  *
- * @author chrl
+ * @author Chris
  */
+import org.chrisle.netbeans.modules.gitrepoviewer.service.actions.RemoveHostAction;
 import java.io.IOException;
 import javax.swing.Action;
 import javax.swing.event.ChangeListener;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.util.NbBundle.Messages;
 
 public class HostNode extends AbstractNode {
 
-    private String key;
+    private IHost key;
     private ChangeListener listener;
 
     @Messages("HINT_HostNode=Represents a git repository.")
-    public HostNode(String key) {
+    public HostNode(IHost hostKey) {
         super(Children.LEAF);
-        this.key = key;
-//        setIconBaseWithExtension("org/myorg/systemproperties/onePropIcon.gif");
-        super.setName(key);
+
+        this.key = hostKey;
+        super.setName(hostKey.getHostName());
+        super.setIconBaseWithExtension(hostKey.getIcon());
+
         setShortDescription(Bundle.HINT_HostNode());
     }
 

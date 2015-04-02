@@ -1,6 +1,7 @@
-package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
+package org.chrisle.netbeans.modules.gitrepoviewer.services;
 
 import java.util.List;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
@@ -9,32 +10,32 @@ import org.eclipse.egit.github.core.RepositoryBranch;
  *
  * @author Chris
  */
-public interface IHost {
-    public void setUserCredentials(String userName, String authToken);
-    public void saveUserCredentials(String userName, String authToken);
+public interface IHostService<T extends IHost> {
+//    public void setUserCredentials();
+    public void saveUserCredentials(T host);
 
     public List<Repository> getRepositories(String userName);
-    public void saveRepository(Object repository);
+//    public void saveRepository(Object repository);
 
     public List<RepositoryBranch> getBranches(IRepositoryIdProvider repositoryId);
-    public void saveBranch(String repositoryId);
+//    public void saveBranch(String repositoryId);
 
     public List<String> getTags();
-    public void saveTag(String repositoryId);
+//    public void saveTag(String repositoryId);
 
-    public String getHostName();
-
-    public String getHostIcon();
+//    public String getHostName();
+//
+//    public String getHostIcon();
 
     /**
      * Get all saved hosts, with all other information (Repositories, Branches, Tags, etc.).
      * @return List of HostBase objects.
      */
-    public List<HostBase> getHosts();
+    public List<T> getHostsFromFile();
 
     /**
      * Saves a host to a file with all information (Repositories, Branches, Tags, etc.).
      * @param host A host, which will be saved.
      */
-    public void saveHost(HostBase host);
+    public void saveHost(T host);
 }

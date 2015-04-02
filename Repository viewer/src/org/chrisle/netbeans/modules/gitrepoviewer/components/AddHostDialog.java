@@ -10,12 +10,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.swing.tree.DefaultMutableTreeNode;
-import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Bitbucket;
-import org.chrisle.netbeans.modules.gitrepoviewer.hosts.Github;
-import org.chrisle.netbeans.modules.gitrepoviewer.hosts.IHost;
-import org.chrisle.netbeans.modules.gitrepoviewer.hosts.User;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.Bitbucket;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.Github;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
+import org.chrisle.netbeans.modules.gitrepoviewer.services.HostService;
+import org.chrisle.netbeans.modules.gitrepoviewer.services.IHostService;
+import org.eclipse.egit.github.core.Repository;
 import org.openide.util.ImageUtilities;
 
 
@@ -26,8 +30,9 @@ import org.openide.util.ImageUtilities;
  */
 public class AddHostDialog extends javax.swing.JDialog {
     private final Map<String, IHost> _hosts;
-    private IHost _selectedHost;
-    private User _userCredentials;
+    private final IHostService<IHost> _hostService;
+    private final IHost _selectedHost;
+    private final User _userCredentials;
     private final ErrorDialog _errorDialog;
 
     /**
@@ -36,11 +41,11 @@ public class AddHostDialog extends javax.swing.JDialog {
     public AddHostDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
+
         _errorDialog = new ErrorDialog(null, true);
         _hosts = new HashMap<String, IHost>() {{
-            IHost github = new Github("Github");
-            IHost bitbucket = new Bitbucket("Bitbucket");
+            IHost github = new Github();
+            IHost bitbucket = new Bitbucket();
 
             put(github.getHostName(), github);
             put(bitbucket.getHostName(), bitbucket);
@@ -48,29 +53,50 @@ public class AddHostDialog extends javax.swing.JDialog {
 
         _hostSelectBox.removeAllItems();
         fillHostSelectBox();
-        
+
         Object selectedHost = _hostSelectBox.getSelectedItem();
         _selectedHost = _hosts.get(selectedHost);
+        _userCredentials = getUserFromFile();
 
-        getUserFromFile();
+        _hostService = new HostService<Github>(_userCredentials);
+
+        setUserFields();
     }
 
-    private void getUserFromFile() {
+    private List<Repository> getRepositoriesFromHost() {
+        return _hostService.getRepositories(_userCredentials.getUserName());
+    }
+
+    private void saveHostsToFile() {
+        _hostService.saveHost(_selectedHost);
+    }
+
+    private void getHostsFromFile() {
+        try {
+            FileReader hosts = new FileReader(System.getProperty("user.home") + "\\.GitRepoViewer\\" + _selectedHost.getHostName() + "User.json");
+        } catch (FileNotFoundException ex) {
+        }
+    }
+
+    private void setUserFields() {
+        _username.setText(_userCredentials.getUserName());
+        _authToken.setText(_userCredentials.getAuthToken());
+    }
+
+    private User getUserFromFile() {
         try {
             FileReader account = new FileReader(System.getProperty("user.home") + "\\.GitRepoViewer\\" + _selectedHost.getHostName() + "User.json");
             Gson userJson = new Gson();
 
-            _userCredentials = userJson.fromJson(account, User.class);
-            account.close();
-
-            _username.setText(_userCredentials.getUserName());
-            _authToken.setText(_userCredentials.getAuthToken());
+            return userJson.fromJson(account, User.class);
+//            account.close();
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
             _errorDialog.setErrorMessage(ex.getMessage());
             _errorDialog.setVisible(true);
         }
-        
+
+        return null;
     }
 
     private void fillHostSelectBox() {
@@ -242,33 +268,37 @@ public class AddHostDialog extends javax.swing.JDialog {
     private void addHostBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostBtnActionPerformed
         if (!_username.getText().isEmpty() && !_authToken.getText().isEmpty()) {
             try {
-                _selectedHost.setUserCredentials(_username.getText(), _authToken.getText());
+                _hostService.saveUserCredentials(_selectedHost);
+                List<Repository> repositoriesFromHost = getRepositoriesFromHost();
+                _selectedHost.setRepositories(repositoriesFromHost);
+
+                saveHostsToFile();
 
                 if (!_users.getText().isEmpty()) {
-                    IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getHostIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _users.getText()));
+                    IconData hostIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(_selectedHost.getIcon())), String.format("%s (%s)", _selectedHost.getHostName(), _users.getText()));
                     DefaultMutableTreeNode hostTreeNode = new DefaultMutableTreeNode(hostIcon);
                     
-                    if (_selectedHost.getRepositories(_users.getText()) != null) {
-                        _selectedHost.getRepositories(_users.getText()).stream().forEach((repo) -> {
-                            String privateIcon = "org/chrisle/gitrepoviewer/resources/private.png";
-
-                            if (!repo.isPrivate()) {
-                                privateIcon = "org/chrisle/gitrepoviewer/resources/world.png";
-                            }
-
-                            IconData privateRepoIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(privateIcon)), repo.getName());
-                            final DefaultMutableTreeNode repoTreeNode = new DefaultMutableTreeNode(privateRepoIcon);
-                            hostTreeNode.add(repoTreeNode);
-
-                            if (_selectedHost.getBranches(repo) != null) {
-                                _selectedHost.getBranches(repo).stream().forEach((branch) -> {
-                                    DefaultMutableTreeNode branchTreeNode = new DefaultMutableTreeNode(branch.getName());
-
-                                    repoTreeNode.add(branchTreeNode);
-                                });
-                            }
-                        });
-                    }
+//                    if (_selectedHost.getRepositories(_users.getText()) != null) {
+//                        _selectedHost.getRepositories(_users.getText()).stream().forEach((repo) -> {
+//                            String privateIcon = "org/chrisle/gitrepoviewer/resources/private.png";
+//
+//                            if (!repo.isPrivate()) {
+//                                privateIcon = "org/chrisle/gitrepoviewer/resources/world.png";
+//                            }
+//
+//                            IconData privateRepoIcon = new IconData(ImageUtilities.image2Icon(ImageUtilities.loadImage(privateIcon)), repo.getName());
+//                            final DefaultMutableTreeNode repoTreeNode = new DefaultMutableTreeNode(privateRepoIcon);
+//                            hostTreeNode.add(repoTreeNode);
+//
+//                            if (_selectedHost.getBranches(repo) != null) {
+//                                _selectedHost.getBranches(repo).stream().forEach((branch) -> {
+//                                    DefaultMutableTreeNode branchTreeNode = new DefaultMutableTreeNode(branch.getName());
+//
+//                                    repoTreeNode.add(branchTreeNode);
+//                                });
+//                            }
+//                        });
+//                    }
 
                     GitRepoViewerTopComponent.addTreeNode(hostTreeNode);
                     this.setVisible(false);

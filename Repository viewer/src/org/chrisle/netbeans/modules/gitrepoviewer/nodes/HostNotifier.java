@@ -1,4 +1,4 @@
-package org.chrisle.netbeans.modules.gitrepoviewer.service;
+package org.chrisle.netbeans.modules.gitrepoviewer.nodes;
 
 /**
  *

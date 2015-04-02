@@ -1,53 +1,55 @@
-package org.chrisle.netbeans.modules.gitrepoviewer.hosts;
+package org.chrisle.netbeans.modules.gitrepoviewer.services;
 
 import java.io.IOException;
 import java.util.List;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.Github;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.chrisle.netbeans.modules.gitrepoviewer.components.ErrorDialog;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
-import org.eclipse.egit.github.core.User;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
-import org.eclipse.egit.github.core.service.UserService;
 /**
  *
  * @author Chris
  */
-public class Github extends HostBase {
-    private final String _hostName;
+public class GithubService extends HostService<Github> {
+    private final User _user;
     private final GitHubClient _client;
     private final RepositoryService _repoService;
     private final ErrorDialog _errorDialog;
 
-    public Github(String hostName) {
+    public GithubService(User user) {
+        super(user);
+
          _errorDialog = new ErrorDialog(null, true);
 
-        this._hostName = hostName;
+        this._user = user;
         
         _client = new GitHubClient();
         _repoService = new RepositoryService();
     }
 
-    @Override
-    public void setUserCredentials(String userName, String token) {
-        _client.setOAuth2Token(token);
-
-        UserService user = new UserService(_client);
-        try {
-            User userClient = user.getUser();
-            String login = userClient.getLogin();
-
-            if (!login.equals(userName)) {
-                throw new IOException("Your credentials are wrong.");
-            }
-
-            super.saveUserCredentials(login, token);
-        } catch (IOException ex) {
-            _errorDialog.setErrorMessage(ex.getMessage());
-            _errorDialog.setVisible(true);
-        }
-    }
+//    @Override
+//    public void setUserCredentials(String userName, String token) {
+//        _client.setOAuth2Token(token);
+//
+//        UserService user = new UserService(_client);
+//        try {
+//            User userClient = user.getUser();
+//            String login = userClient.getLogin();
+//
+//            if (!login.equals(userName)) {
+//                throw new IOException("Your credentials are wrong.");
+//            }
+//
+//            super.saveUserCredentials(login, token);
+//        } catch (IOException ex) {
+//            _errorDialog.setErrorMessage(ex.getMessage());
+//            _errorDialog.setVisible(true);
+//        }
+//    }
 
     @Override
     public List<Repository> getRepositories(String userName) {
@@ -77,13 +79,13 @@ public class Github extends HostBase {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public String getHostName() {
-        return _hostName;
-    }
-
-    @Override
-    public String getHostIcon() {
-        return "org/chrisle/gitrepoviewer/resources/github.png";
-    }
+//    @Override
+//    public String getHostName() {
+//        return _user.getUserName();
+//    }
+//
+//    @Override
+//    public String getHostIcon() {
+//        return "org/chrisle/gitrepoviewer/resources/github.png";
+//    }
 }
