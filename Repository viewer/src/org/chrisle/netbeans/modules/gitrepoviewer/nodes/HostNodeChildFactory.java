@@ -13,12 +13,11 @@ import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
 
-public class GitHostChildFactory extends ChildFactory<IHost> {
-
+public class HostNodeChildFactory extends ChildFactory<IHost> {
     private ChangeListener _listener;
     private final IHost _host;
 
-    public GitHostChildFactory(IHost host) {
+    public HostNodeChildFactory(IHost host) {
         this._host = host;
     }
 
@@ -37,8 +36,10 @@ public class GitHostChildFactory extends ChildFactory<IHost> {
 
     @Override
     protected boolean createKeys(List<IHost> hosts) {
+        // TODO: Length of saved hosts.
         IHost[] objs = new Host[5];
         for (int i = 0; i < objs.length; i++) {
+            // TODO: Saved hosts.
             IHost host = new Host();
 
             host.setHostName("Bitbucket");
@@ -54,8 +55,8 @@ public class GitHostChildFactory extends ChildFactory<IHost> {
     @Override
     protected Node createNodeForKey(IHost key) {
         return new HostNode(key);
-        
-//        Node result = new AbstractNode(Children.create(new GitHostChildFactory(_host), true), Lookups.singleton(key));
+
+//        Node result = new AbstractNode(Children.create(new HostNodeChildFactory(_host), true), Lookups.singleton(key));
 //        result.setDisplayName(key.getHostName());
 //
 //        return result;

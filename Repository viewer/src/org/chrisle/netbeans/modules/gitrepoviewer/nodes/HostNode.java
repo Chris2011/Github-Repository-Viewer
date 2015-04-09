@@ -1,107 +1,67 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.nodes;
 
-/**
- *
- * @author Chris
- */
-import org.chrisle.netbeans.modules.gitrepoviewer.service.actions.RemoveHostAction;
-import java.io.IOException;
+import javax.swing.AbstractAction;
+import org.chrisle.netbeans.modules.gitrepoviewer.service.actions.AddHostAction;
+import org.openide.awt.ActionID;
 import javax.swing.Action;
 import javax.swing.event.ChangeListener;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.Host;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
+import org.chrisle.netbeans.modules.gitrepoviewer.service.actions.RemoveHostAction;
+import org.netbeans.api.core.ide.ServicesTabNodeRegistration;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
-import org.openide.util.NbBundle.Messages;
+import org.openide.util.NbBundle;
+import org.openide.util.lookup.Lookups;
 
+@ActionID(
+    category = "Team",
+    id = "org.chrisle.gitrepoviewer.service.GitRepoNode"
+)
+//@ActionRegistration(
+//        displayName = "#CTL_GitRepoNode"
+//)
+//@ActionReference(path = "Menu/Tools", position = 805)
+//@Messages({
+//    "CTL_GitRepoViewerServiceNode=Git Repositories",
+//    "HINT_GitRepoViewerServiceNode=See all repositories of a host account (Github, BitBucket)"
+//})
+
+@ServicesTabNodeRegistration(
+        name = "GitRepoNode",
+        displayName = "Git Repositories",
+        shortDescription = "See all git repositories of a host account (Github, BitBucket)",
+        iconResource = "org/chrisle/netbeans/modules/gitrepoviewer/resources/world.png",
+        position = 2021)
 public class HostNode extends AbstractNode {
+    ChangeListener _listener;
+    HostNodeChildFactory _gitRepoChildFactory;
+    AbstractAction hostAction;
 
-    private IHost key;
-    private ChangeListener listener;
+    @NbBundle.Messages("HINT_HostNode=Represents a git repository.")
+    public HostNode(IHost childNode) {
+        super(Children.create(new RepositoryNodeChildFactory(new Repository()), true), Lookups.singleton(childNode));
+        super.setName(childNode.getHostName());
+        super.setShortDescription(Bundle.HINT_HostNode());
+        super.setIconBaseWithExtension(childNode.getIcon());
 
-    @Messages("HINT_HostNode=Represents a git repository.")
-    public HostNode(IHost hostKey) {
-        super(Children.LEAF);
+        hostAction = new RemoveHostAction();
+    }
 
-        this.key = hostKey;
-        super.setName(hostKey.getHostName());
-        super.setIconBaseWithExtension(hostKey.getIcon());
+    public HostNode() {
+        super(Children.create(new HostNodeChildFactory(new Host()), true));
+        super.setName("Git Repositories");
+        super.setShortDescription("See all repositories of a host account (Github, BitBucket)");
+        super.setIconBaseWithExtension("org/chrisle/netbeans/modules/gitrepoviewer/resources/world.png");
 
-        setShortDescription(Bundle.HINT_HostNode());
+        hostAction = new AddHostAction();
     }
 
     @Override
     public Action[] getActions(boolean context) {
-        Action[] result = new Action[]{
-            new RemoveHostAction()
+        Action[] result = new Action[] {
+            hostAction
         };
-
         return result;
     }
-
-//    @Override
-//    public Action getPreferredAction() {
-//        return SystemAction.get(PropertiesAction.class);
-//    }
-//
-//    @Override
-//    public Node cloneNode() {
-//        return new HostNode(key);
-//    }
-
-//    @Messages({"PROP_value=Value","HINT_value=Value of this system property."})
-//    @Override
-//    protected Sheet createSheet() {
-//        Sheet sheet = super.createSheet();
-//        Sheet.Set props = sheet.get(Sheet.PROPERTIES);
-//        if (props == null) {
-//            props = Sheet.createPropertiesSet();
-//            sheet.put(props);
-//        }
-//        props.put(new PropertySupport.Name(this));
-//        class ValueProp extends PropertySupport.ReadWrite {
-//            public ValueProp() {
-//                super("value", String.class, Bundle.PROP_value(), Bundle.HINT_value());
-//            }
-//            @Override
-//            public Object getValue() {
-//                return System.getProperty(key);
-//            }
-//            @Override
-//            public void setValue(Object nue) {
-//                System.setProperty(key, (String) nue);
-//                HostNotifier.changed();
-//            }
-//        }
-//        props.put(new ValueProp());
-//        HostNotifier.addChangeListener(listener = new ChangeListener() {
-//            @Override
-//            public void stateChanged(ChangeEvent ev) {
-//                firePropertyChange("value", null, null);
-//            }
-//        });
-//        return sheet;
-//    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        if (listener != null) {
-            HostNotifier.removeChangeListener(listener);
-        }
-    }
-
-    @Override
-    public boolean canDestroy() {
-        return true;
-    }
-
-    @Override
-    public void destroy() throws IOException {
-//        Properties
-//        List<Host> hosts = HostBaseHosts();
-//        hosts.remove(key);
-//        HostBase.setHosts(hosts);
-//        HostNotifier.changed();
-    }
-    
 }
