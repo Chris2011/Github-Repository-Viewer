@@ -5,6 +5,7 @@ import java.util.List;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.Github;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.chrisle.netbeans.modules.gitrepoviewer.components.ErrorDialog;
+import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
@@ -52,9 +53,9 @@ public class GithubService extends HostService<Github> {
 //    }
 
     @Override
-    public List<Repository> getRepositories(String userName) {
+    public List<IRepository> getRepositories(String userName) {
         try {
-            return _repoService.getRepositories(userName);
+            return (List<IRepository>)(IRepository)_repoService.getRepositories(userName);
         } catch (IOException ex) {
             _errorDialog.setErrorMessage(ex.getMessage());
             _errorDialog.setVisible(true);

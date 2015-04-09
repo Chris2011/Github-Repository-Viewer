@@ -1,6 +1,7 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.beans;
 
 import java.util.List;
+import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
 import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
 import org.eclipse.egit.github.core.RepositoryTag;
@@ -12,7 +13,7 @@ import org.eclipse.egit.github.core.RepositoryTag;
 //public abstract class Host implements IHost {
 public class Host implements IHost {
     private String _hostName;
-    private List<Repository> _repositories;
+    private List<IRepository> _repositories;
     private List<RepositoryBranch> _branches;
     private List<RepositoryTag> _tags;
     private String _icon;
@@ -28,12 +29,12 @@ public class Host implements IHost {
     }
 
     @Override
-    public List<Repository> getRepositories() {
+    public List<IRepository> getRepositories() {
         return this._repositories;
     }
 
     @Override
-    public void setRepositories(List<Repository> repositories) {
+    public void setRepositories(List<IRepository> repositories) {
         this._repositories = repositories;
     }
 

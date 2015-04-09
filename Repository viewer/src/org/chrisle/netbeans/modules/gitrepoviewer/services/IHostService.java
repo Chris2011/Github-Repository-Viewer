@@ -2,8 +2,8 @@ package org.chrisle.netbeans.modules.gitrepoviewer.services;
 
 import java.util.List;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
+import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
-import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
 
 /**
@@ -14,7 +14,7 @@ public interface IHostService<T extends IHost> {
 //    public void setUserCredentials();
     public void saveUserCredentials(T host);
 
-    public List<Repository> getRepositories(String userName);
+    public List<IRepository> getRepositories(String userName);
 //    public void saveRepository(Object repository);
 
     public List<RepositoryBranch> getBranches(IRepositoryIdProvider repositoryId);

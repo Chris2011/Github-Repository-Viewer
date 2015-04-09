@@ -3,8 +3,8 @@ package org.chrisle.netbeans.modules.gitrepoviewer.services;
 import java.util.List;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.Bitbucket;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
+import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
-import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
 
 /**
@@ -20,7 +20,7 @@ public class BitbucketService extends HostService<Bitbucket> {
     }
 
     @Override
-    public List<Repository> getRepositories(String userName) {
+    public List<IRepository> getRepositories(String userName) {
         return null;
     }
 

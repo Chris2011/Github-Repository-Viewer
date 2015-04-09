@@ -17,6 +17,7 @@ import org.chrisle.netbeans.modules.gitrepoviewer.beans.Bitbucket;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.Github;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
+import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.HostService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.IHostService;
 import org.eclipse.egit.github.core.Repository;
@@ -63,7 +64,7 @@ public class AddHostDialog extends javax.swing.JDialog {
         setUserFields();
     }
 
-    private List<Repository> getRepositoriesFromHost() {
+    private List<IRepository> getRepositoriesFromHost() {
         return _hostService.getRepositories(_userCredentials.getUserName());
     }
 
@@ -269,7 +270,7 @@ public class AddHostDialog extends javax.swing.JDialog {
         if (!_username.getText().isEmpty() && !_authToken.getText().isEmpty()) {
             try {
                 _hostService.saveUserCredentials(_selectedHost);
-                List<Repository> repositoriesFromHost = getRepositoriesFromHost();
+                List<IRepository> repositoriesFromHost = getRepositoriesFromHost();
                 _selectedHost.setRepositories(repositoriesFromHost);
 
                 saveHostsToFile();
