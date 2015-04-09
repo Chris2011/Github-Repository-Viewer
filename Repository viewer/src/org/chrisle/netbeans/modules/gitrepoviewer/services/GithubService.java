@@ -1,13 +1,14 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.Github;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.chrisle.netbeans.modules.gitrepoviewer.components.ErrorDialog;
 import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
+import org.chrisle.netbeans.modules.gitrepoviewer.nodes.Repository;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
-import org.eclipse.egit.github.core.Repository;
 import org.eclipse.egit.github.core.RepositoryBranch;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.RepositoryService;
@@ -55,10 +56,20 @@ public class GithubService extends HostService<Github> {
     @Override
     public List<IRepository> getRepositories(String userName) {
         try {
-            return (List<IRepository>)(IRepository)_repoService.getRepositories(userName);
-        } catch (IOException ex) {
+            final ArrayList<IRepository> arrayList = new ArrayList<>();
+
+            arrayList.add(new Repository("Repo1"));
+            arrayList.add(new Repository("Repo2"));
+            arrayList.add(new Repository("Repo3"));
+            arrayList.add(new Repository("Repo4"));
+
+            return arrayList;
+//            return (List<IRepository>)(IRepository)_repoService.getRepositories(userName);
+//        } catch (IOException ex) {
+        } catch (Exception ex) {
             _errorDialog.setErrorMessage(ex.getMessage());
             _errorDialog.setVisible(true);
+
             return null;
         }
     }

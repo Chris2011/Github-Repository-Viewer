@@ -9,5 +9,5 @@ public interface IRepository {
     public void setName(String repoName);
 
     public String getIcon();
-    public void setIcon(String icon);
+//    public void setIcon(String icon);
 }

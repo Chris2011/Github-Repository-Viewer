@@ -8,6 +8,11 @@ public class Repository implements IRepository {
     private String _repoName;
     private String _icon;
 
+    public Repository(String repoName) {
+        this._repoName = repoName;
+        this._icon = "org/chrisle/netbeans/modules/gitrepoviewer/resources/repo.png";
+    }
+
     @Override
     public String getName() {
         return this._repoName;
@@ -22,7 +27,7 @@ public class Repository implements IRepository {
         return _icon;
     }
 
-    public void setIcon(String iconName) {
-        this._icon = iconName;
-    }
+//    public void setIcon(String iconName) {
+//        this._icon = iconName;
+//    }
 }

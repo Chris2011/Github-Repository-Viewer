@@ -17,6 +17,6 @@ public class RepositoryNode extends AbstractNode{
     }
 
     public RepositoryNode() {
-        super(Children.create(new RepositoryNodeChildFactory(new Repository()), true));
+        super(Children.create(new RepositoryNodeChildFactory(new Repository("")), true));
     }
 }

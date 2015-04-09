@@ -20,10 +20,7 @@ import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.HostService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.IHostService;
-import org.eclipse.egit.github.core.Repository;
 import org.openide.util.ImageUtilities;
-
-
 
 /**
  *
@@ -59,7 +56,7 @@ public class AddHostDialog extends javax.swing.JDialog {
         _selectedHost = _hosts.get(selectedHost);
         _userCredentials = getUserFromFile();
 
-        _hostService = new HostService<Github>(_userCredentials);
+        _hostService = new HostService<>(_userCredentials);
 
         setUserFields();
     }

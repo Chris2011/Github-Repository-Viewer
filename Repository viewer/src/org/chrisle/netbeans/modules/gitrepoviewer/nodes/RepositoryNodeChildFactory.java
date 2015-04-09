@@ -23,10 +23,10 @@ public class RepositoryNodeChildFactory extends ChildFactory<IRepository> {
 
         for (int i = 0; i < objs.length; i++) {
             // TODO: Saved repositoryList.
-            IRepository repo = new Repository();
+            IRepository repo = new Repository("TestRepo");
 
-            repo.setName("TestRepo");
-            repo.setIcon("org/chrisle/netbeans/modules/gitrepoviewer/resources/repo.png");
+//            repo.setName("TestRepo");
+//            repo.setIcon("org/chrisle/netbeans/modules/gitrepoviewer/resources/repo.png");
 
             objs[i] = repo;
         }
