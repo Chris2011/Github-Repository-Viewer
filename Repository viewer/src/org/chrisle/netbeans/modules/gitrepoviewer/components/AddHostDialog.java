@@ -18,7 +18,8 @@ import org.chrisle.netbeans.modules.gitrepoviewer.beans.Github;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
-import org.chrisle.netbeans.modules.gitrepoviewer.services.HostService;
+import org.chrisle.netbeans.modules.gitrepoviewer.services.BitbucketService;
+import org.chrisle.netbeans.modules.gitrepoviewer.services.GithubService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.IHostService;
 import org.openide.util.ImageUtilities;
 
@@ -56,7 +57,13 @@ public class AddHostDialog extends javax.swing.JDialog {
         _selectedHost = _hosts.get(selectedHost);
         _userCredentials = getUserFromFile();
 
-        _hostService = new HostService<>(_userCredentials);
+        
+        // TODO: Refactor code.
+        if (_selectedHost instanceof Github) {
+            _hostService = new GithubService(_userCredentials);
+        } else {
+            _hostService = new BitbucketService(_userCredentials);
+        }
 
         setUserFields();
     }

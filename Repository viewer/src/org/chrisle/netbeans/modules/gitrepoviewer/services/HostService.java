@@ -72,7 +72,6 @@ public class HostService<T> implements IHostService<IHost> {
     @Override
     public void saveHost(IHost host) {
         String hostJson = _gsonProvider.toJson(host);
-
         try {
             File dir = new File(_dirName);
             dir.mkdir();
