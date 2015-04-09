@@ -25,7 +25,9 @@ public class RepositoryNodeChildFactory extends ChildFactory<IRepository> {
             // TODO: Saved repositoryList.
             IRepository repo = new Repository();
 
-            repo.setRepositoryName("TestRepo");
+            repo.setName("TestRepo");
+            repo.setIcon("org/chrisle/netbeans/modules/gitrepoviewer/resources/repo.png");
+
             objs[i] = repo;
         }
 

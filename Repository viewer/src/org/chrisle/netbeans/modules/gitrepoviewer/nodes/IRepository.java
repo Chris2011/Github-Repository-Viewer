@@ -5,6 +5,9 @@ package org.chrisle.netbeans.modules.gitrepoviewer.nodes;
  * @author chrl
  */
 public interface IRepository {
-    public String getRepositoryName();
-    public void setRepositoryName(String repoName);
+    public String getName();
+    public void setName(String repoName);
+
+    public String getIcon();
+    public void setIcon(String icon);
 }

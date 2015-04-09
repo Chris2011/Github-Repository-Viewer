@@ -44,6 +44,7 @@ public class HostNodeChildFactory extends ChildFactory<IHost> {
 
             host.setHostName("Bitbucket");
             host.setIcon("org/chrisle/netbeans/modules/gitrepoviewer/resources/bitbucket.png");
+
             objs[i] = host;
         }
 

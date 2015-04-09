@@ -8,9 +8,10 @@ import org.openide.nodes.Children;
  * @author chrl
  */
 public class RepositoryNode extends AbstractNode{
-    public RepositoryNode(IRepository childNode) {
+    public RepositoryNode(IRepository repoChildNode) {
         super(Children.LEAF);
-        super.setName(childNode.getRepositoryName());
+        super.setName(repoChildNode.getName());
+        super.setIconBaseWithExtension(repoChildNode.getIcon());
 
         setShortDescription("All Repos");
     }

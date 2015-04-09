@@ -39,11 +39,11 @@ public class HostNode extends AbstractNode {
     AbstractAction hostAction;
 
     @NbBundle.Messages("HINT_HostNode=Represents a git repository.")
-    public HostNode(IHost childNode) {
-        super(Children.create(new RepositoryNodeChildFactory(new Repository()), true), Lookups.singleton(childNode));
-        super.setName(childNode.getHostName());
+    public HostNode(IHost hostChildNode) {
+        super(Children.create(new RepositoryNodeChildFactory(new Repository()), true), Lookups.singleton(hostChildNode));
+        super.setName(hostChildNode.getHostName());
         super.setShortDescription(Bundle.HINT_HostNode());
-        super.setIconBaseWithExtension(childNode.getIcon());
+        super.setIconBaseWithExtension(hostChildNode.getIcon());
 
         hostAction = new RemoveHostAction();
     }
