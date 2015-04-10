@@ -78,7 +78,7 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     private void getHostsFromFile() {
         try {
-            FileReader hosts = new FileReader(System.getProperty("user.home") + "\\.GitRepoViewer\\" + _selectedHost.getHostName() + "User.json");
+            FileReader hosts = new FileReader(System.getProperty("user.home") + "\\.GitRepoViewer\\" + _selectedHost.getHostName() + "Hosts.json");
         } catch (FileNotFoundException ex) {
         }
     }

@@ -4,12 +4,15 @@ package org.chrisle.netbeans.modules.gitrepoviewer.nodes;
  *
  * @author Chris
  */
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.Host;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
+import org.chrisle.netbeans.modules.gitrepoviewer.repositories.FileRepository;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
 
@@ -18,6 +21,7 @@ public class HostNodeChildFactory extends ChildFactory<IHost> {
     private final IHost _host;
 
     public HostNodeChildFactory(IHost host) {
+        _fileRepository = new FileRepository();
         this._host = host;
     }
 
@@ -36,8 +40,10 @@ public class HostNodeChildFactory extends ChildFactory<IHost> {
 
     @Override
     protected boolean createKeys(List<IHost> hosts) {
+        final int hostsLength = _fileRepository.getHostsLength();
+
         // TODO: Length of saved hosts.
-        IHost[] objs = new Host[5];
+        IHost[] objs = new Host[hostsLength];
         for (int i = 0; i < objs.length; i++) {
             // TODO: Saved hosts.
             IHost host = new Host();
@@ -52,6 +58,7 @@ public class HostNodeChildFactory extends ChildFactory<IHost> {
 
         return true;
     }
+    private final FileRepository _fileRepository;
 
     @Override
     protected Node createNodeForKey(IHost key) {
