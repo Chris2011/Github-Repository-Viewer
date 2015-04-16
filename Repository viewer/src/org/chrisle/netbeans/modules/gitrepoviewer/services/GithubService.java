@@ -20,12 +20,9 @@ public class GithubService extends HostService<Github> {
     private final User _user;
     private final GitHubClient _client;
     private final RepositoryService _repoService;
-    private final ErrorDialog _errorDialog;
 
     public GithubService(User user) {
         super(user);
-
-         _errorDialog = new ErrorDialog(null, true);
 
         this._user = user;
         
@@ -67,9 +64,6 @@ public class GithubService extends HostService<Github> {
 //            return (List<IRepository>)(IRepository)_repoService.getRepositories(userName);
 //        } catch (IOException ex) {
         } catch (Exception ex) {
-            _errorDialog.setErrorMessage(ex.getMessage());
-            _errorDialog.setVisible(true);
-
             return null;
         }
     }
@@ -79,9 +73,6 @@ public class GithubService extends HostService<Github> {
         try {
             return _repoService.getBranches(repositoryId);
         } catch (IOException ex) {
-            _errorDialog.setErrorMessage(ex.getMessage());
-            _errorDialog.setVisible(true);
-
             return null;
         }
     }

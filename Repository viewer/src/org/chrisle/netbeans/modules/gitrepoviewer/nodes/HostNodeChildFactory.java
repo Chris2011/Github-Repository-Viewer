@@ -12,7 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.Host;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
-import org.chrisle.netbeans.modules.gitrepoviewer.repositories.FileRepository;
+import org.chrisle.netbeans.modules.gitrepoviewer.repositories.HostRepository;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
 
@@ -21,7 +21,7 @@ public class HostNodeChildFactory extends ChildFactory<IHost> {
     private final IHost _host;
 
     public HostNodeChildFactory(IHost host) {
-        _fileRepository = new FileRepository();
+        _fileRepository = new HostRepository();
         this._host = host;
     }
 
@@ -58,7 +58,7 @@ public class HostNodeChildFactory extends ChildFactory<IHost> {
 
         return true;
     }
-    private final FileRepository _fileRepository;
+    private final HostRepository _fileRepository;
 
     @Override
     protected Node createNodeForKey(IHost key) {

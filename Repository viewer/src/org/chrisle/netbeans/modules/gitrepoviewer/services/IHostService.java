@@ -2,6 +2,7 @@ package org.chrisle.netbeans.modules.gitrepoviewer.services;
 
 import java.util.List;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
+import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.RepositoryBranch;
@@ -32,6 +33,8 @@ public interface IHostService<T extends IHost> {
      * @return List of HostBase objects.
      */
     public List<T> getHostsFromFile();
+
+    public User getUser();
 
     /**
      * Saves a host to a file with all information (Repositories, Branches, Tags, etc.).

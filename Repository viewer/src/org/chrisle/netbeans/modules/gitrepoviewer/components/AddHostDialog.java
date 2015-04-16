@@ -5,7 +5,6 @@
  */
 package org.chrisle.netbeans.modules.gitrepoviewer.components;
 
-import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -90,13 +89,8 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     private User getUserFromFile() {
         try {
-            FileReader account = new FileReader(System.getProperty("user.home") + "\\.GitRepoViewer\\" + _selectedHost.getHostName() + "User.json");
-            Gson userJson = new Gson();
-
-            return userJson.fromJson(account, User.class);
-//            account.close();
-        } catch (FileNotFoundException ex) {
-        } catch (IOException ex) {
+            return _hostService.getUser();
+        } catch (Exception ex) {
             _errorDialog.setErrorMessage(ex.getMessage());
             _errorDialog.setVisible(true);
         }
