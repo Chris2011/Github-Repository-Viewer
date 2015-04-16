@@ -7,12 +7,10 @@ import java.io.FileReader;
  *
  * @author chrl
  */
-public class FileRepository {
+public class HostRepository {
     private String _selectedHost;
 
     public int getHostsLength() {
-        getHostsLength();
-
         return 0;
     }
 
