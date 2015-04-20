@@ -7,7 +7,6 @@ package org.chrisle.netbeans.modules.gitrepoviewer.components;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +16,7 @@ import org.chrisle.netbeans.modules.gitrepoviewer.beans.Github;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
+import org.chrisle.netbeans.modules.gitrepoviewer.repositories.UserRepository;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.BitbucketService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.GithubService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.IHostService;
@@ -89,7 +89,10 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     private User getUserFromFile() {
         try {
-            return _hostService.getUser();
+            UserRepository userRepo = new UserRepository();
+            userRepo.setSelectedHost(this._selectedHost.getHostName());
+
+            return userRepo.getUser();
         } catch (Exception ex) {
             _errorDialog.setErrorMessage(ex.getMessage());
             _errorDialog.setVisible(true);

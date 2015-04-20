@@ -17,23 +17,29 @@ public class UserRepository {
     private FileReader _userFile;
     private Gson _gsonProvider;
     private final String _dirName;
+    private String _filePrefix;
 
     public UserRepository() {
         _gsonProvider = new Gson();
         _dirName = System.getProperty("user.home") + "\\.GitRepoViewer\\";
-
-        try {
-            this._userFile = new FileReader(this._dirName + this._selectedHost + "User.json");
-        } catch (FileNotFoundException ex) {
-            Exceptions.printStackTrace(ex);
-        }
+        _filePrefix = "User.json";
     }
 
     public void setSelectedHost(String host) {
         this._selectedHost = host;
     }
 
-    public User getUser() {
+    private void setUserFile() throws FileNotFoundException {
+        try {
+            this._userFile = new FileReader(this._dirName + this._selectedHost + this._filePrefix);
+        } catch (FileNotFoundException ex) {
+            throw new FileNotFoundException(ex.getMessage());
+        }
+    }
+
+    public User getUser() throws FileNotFoundException {
+        setUserFile();
+
         return this._gsonProvider.fromJson(this._userFile, User.class);
     }
 
@@ -43,8 +49,8 @@ public class UserRepository {
         try {
             File dir = new File(_dirName);
             dir.mkdir();
-            
-            File file = new File(dir, this._selectedHost + "Hosts.json");
+
+            File file = new File(dir, this._selectedHost + this._filePrefix);
             FileWriter fileWriter = new FileWriter(file);
 
             fileWriter.write(userJson);
