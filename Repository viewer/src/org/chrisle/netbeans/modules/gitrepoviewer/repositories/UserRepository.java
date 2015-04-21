@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
-import org.openide.util.Exceptions;
 
 /**
  *
@@ -14,10 +13,9 @@ import org.openide.util.Exceptions;
  */
 public class UserRepository {
     private String _selectedHost;
-    private FileReader _userFile;
-    private Gson _gsonProvider;
+    private final Gson _gsonProvider;
     private final String _dirName;
-    private String _filePrefix;
+    private final String _filePrefix;
 
     public UserRepository() {
         _gsonProvider = new Gson();
@@ -29,18 +27,12 @@ public class UserRepository {
         this._selectedHost = host;
     }
 
-    private void setUserFile() throws FileNotFoundException {
+    public User getUser() throws FileNotFoundException {
         try {
-            this._userFile = new FileReader(this._dirName + this._selectedHost + this._filePrefix);
+            return this._gsonProvider.fromJson(new FileReader(this._dirName + this._selectedHost + this._filePrefix), User.class);
         } catch (FileNotFoundException ex) {
             throw new FileNotFoundException(ex.getMessage());
         }
-    }
-
-    public User getUser() throws FileNotFoundException {
-        setUserFile();
-
-        return this._gsonProvider.fromJson(this._userFile, User.class);
     }
 
     public void saveUser(User user) throws Exception {
@@ -58,19 +50,5 @@ public class UserRepository {
         } catch(Exception e) {
             throw new Exception(e.getMessage());
         }
-//        String hostJson = _gsonProvider.toJson(host);
-//        try {
-//            File dir = new File(_dirName);
-//            dir.mkdir();
-//            
-//            File file = new File(dir, host.getHostName() + "Hosts.json");
-//            FileWriter fileWriter = new FileWriter(file);
-//
-//            fileWriter.write(hostJson);
-//            fileWriter.close();
-//        } catch(Exception e) {
-//            _errorDialog.setErrorMessage(e.getMessage());
-//            _errorDialog.setVisible(true);
-//        }
     }
 }

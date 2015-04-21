@@ -20,4 +20,21 @@ public class HostRepository {
         } catch (FileNotFoundException ex) {
         }
     }
+
+    public void saveHost() {
+        //        String hostJson = _gsonProvider.toJson(host);
+//        try {
+//            File dir = new File(_dirName);
+//            dir.mkdir();
+//            
+//            File file = new File(dir, host.getHostName() + "Hosts.json");
+//            FileWriter fileWriter = new FileWriter(file);
+//
+//            fileWriter.write(hostJson);
+//            fileWriter.close();
+//        } catch(Exception e) {
+//            _errorDialog.setErrorMessage(e.getMessage());
+//            _errorDialog.setVisible(true);
+//        }
+    }
 }
