@@ -43,7 +43,7 @@ public class GithubService extends HostService<Github> {
 //                throw new IOException("Your credentials are wrong.");
 //            }
 //
-//            super.saveUserCredentials(login, token);
+//            super.saveUser(login, token);
 //        } catch (IOException ex) {
 //            _errorDialog.setErrorMessage(ex.getMessage());
 //            _errorDialog.setVisible(true);

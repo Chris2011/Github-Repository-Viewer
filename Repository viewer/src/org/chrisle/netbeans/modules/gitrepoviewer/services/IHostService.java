@@ -13,7 +13,7 @@ import org.eclipse.egit.github.core.RepositoryBranch;
  */
 public interface IHostService<T extends IHost> {
 //    public void setUserCredentials();
-    public void saveUserCredentials(T host);
+    public void saveUser(T host);
 
     public List<IRepository> getRepositories(String userName);
 //    public void saveRepository(Object repository);

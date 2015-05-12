@@ -270,7 +270,7 @@ public class AddHostDialog extends javax.swing.JDialog {
     private void addHostBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostBtnActionPerformed
         if (!_username.getText().isEmpty() && !_authToken.getText().isEmpty()) {
             try {
-                _hostService.saveUserCredentials(_selectedHost);
+                _hostService.saveUser(_selectedHost);
                 List<IRepository> repositoriesFromHost = getRepositoriesFromHost();
                 _selectedHost.setRepositories(repositoriesFromHost);
 
