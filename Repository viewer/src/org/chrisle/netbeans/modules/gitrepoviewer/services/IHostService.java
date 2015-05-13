@@ -13,7 +13,7 @@ import org.eclipse.egit.github.core.RepositoryBranch;
  */
 public interface IHostService<T extends IHost> {
 //    public void setUserCredentials();
-    public void saveUser(T host);
+//    public void saveUser(T host);
 
     public List<IRepository> getRepositories(String userName);
 //    public void saveRepository(Object repository);
@@ -34,7 +34,7 @@ public interface IHostService<T extends IHost> {
      */
     public List<T> getHostsFromFile();
 
-    public User getUser();
+//    public User getUser();
 
     /**
      * Saves a host to a file with all information (Repositories, Branches, Tags, etc.).

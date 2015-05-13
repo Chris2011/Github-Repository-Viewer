@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.Github;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
-import org.chrisle.netbeans.modules.gitrepoviewer.components.ErrorDialog;
 import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
 import org.chrisle.netbeans.modules.gitrepoviewer.nodes.Repository;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
@@ -23,7 +22,6 @@ public class GithubService extends HostService<Github> {
 
     public GithubService(User user) {
         super(user);
-
         this._user = user;
         
         _client = new GitHubClient();

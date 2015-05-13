@@ -1,22 +1,18 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.services;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.chrisle.netbeans.modules.gitrepoviewer.nodes.IRepository;
-import org.chrisle.netbeans.modules.gitrepoviewer.repositories.UserRepository;
 import org.eclipse.egit.github.core.IRepositoryIdProvider;
 import org.eclipse.egit.github.core.RepositoryBranch;
-import org.openide.util.Exceptions;
 
 /**
  *
  * @author Chris
  */
-public class HostService<T> extends UserService implements IHostService<IHost> {
-
+public class HostService<T> implements IHostService<IHost> {
     public HostService(User user) {
     }
 
@@ -42,11 +38,6 @@ public class HostService<T> extends UserService implements IHostService<IHost> {
     }
 
 
-    @Override
-    public void saveHost(IHost host) {
-        
-    }
-
 //    @Override
 //    public void saveRepository(Object repository) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -66,4 +57,9 @@ public class HostService<T> extends UserService implements IHostService<IHost> {
 //    public void setUserCredentials() {
 //        // TODO: Will be overriden.
 //    }
+
+    @Override
+    public void saveHost(IHost host) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
