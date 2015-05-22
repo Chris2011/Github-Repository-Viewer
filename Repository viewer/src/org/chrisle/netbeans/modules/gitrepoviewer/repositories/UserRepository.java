@@ -18,9 +18,9 @@ public class UserRepository {
     private final String _filePrefix;
 
     public UserRepository() {
-        _gsonProvider = new Gson();
-        _dirName = System.getProperty("user.home") + "\\.GitRepoViewer\\";
-        _filePrefix = "User.json";
+        this._gsonProvider = new Gson();
+        this._dirName = System.getProperty("user.home") + "\\.GitRepoViewer\\";
+        this._filePrefix = "User.json";
     }
 
     public void setSelectedHost(String host) {

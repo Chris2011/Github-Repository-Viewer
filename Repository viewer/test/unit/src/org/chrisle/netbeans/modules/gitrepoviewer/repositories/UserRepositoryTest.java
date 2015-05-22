@@ -14,6 +14,7 @@ import static org.junit.Assert.*;
  */
 public class UserRepositoryTest {
     private UserRepository _instance;
+//    private Mockito _test;
     
     public UserRepositoryTest() {
     }
@@ -25,7 +26,7 @@ public class UserRepositoryTest {
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         String host = "Github";
