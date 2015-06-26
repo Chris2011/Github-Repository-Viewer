@@ -5,6 +5,7 @@
  */
 package org.chrisle.netbeans.modules.gitrepoviewer.components;
 
+import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
@@ -89,7 +90,7 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     private User getUserFromFile() {
         try {
-            UserRepository userRepo = new UserRepository();
+            UserRepository userRepo = new UserRepository(new Gson());
             userRepo.setSelectedHost(this._selectedHost.getHostName());
 
             return userRepo.getUser();
