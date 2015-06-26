@@ -1,37 +1,40 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.repositories;
 
+import com.google.gson.Gson;
+import java.io.FileReader;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.junit.After;
-import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  *
  * @author chrl
  */
+@RunWith(PowerMockRunner.class)
+//@PrepareForTest({
+//    UserRepository.class
+//})
 public class UserRepositoryTest {
-    private UserRepository _instance;
-//    private Mockito _test;
-    
-    public UserRepositoryTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
+    private UserRepository _userRepo;
+
+//    @Mock
+    private Gson _gsonProvider;
+
+//    @Mock
+    private FileReader _fileReader;
+    private String _host;
 
     @Before
     public void setUp() {
-        String host = "Github";
-        _instance = new UserRepository();
-        _instance.setSelectedHost(host);
+        this._host = "Github";
+        this._gsonProvider = PowerMockito.mock(Gson.class);
+        this._fileReader = PowerMockito.mock(FileReader.class);
     }
     
     @After
@@ -44,9 +47,16 @@ public class UserRepositoryTest {
     @Test
     public void testGetUser() throws Exception {
         System.out.println("getUser");
-//        UserRepository instance = new UserRepository();
-        String expResult = "TapferMaaaan";
-        User result = _instance.getUser();
+        //        _userRepo.setSelectedHost(host);
+        
+        PowerMockito.whenNew(FileReader.class).withArguments("PathToFile.txt").thenReturn(this._fileReader);
+
+        String expResult = "ChrisLE";
+
+        PowerMockito.when(this._gsonProvider.fromJson(this._fileReader, User.class)).thenReturn(new User("ChrisLE", "MyToken"));
+
+        this._userRepo = new UserRepository(_gsonProvider);
+        User result = this._userRepo.getUser();
         
         assertEquals(expResult, result.getUserName());
     }
