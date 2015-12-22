@@ -2,3 +2,5 @@
 build
 # IDE
 nbproject
+# TEST
+.jacocoverage
