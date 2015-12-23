@@ -50,7 +50,6 @@ public class AddHostDialog extends javax.swing.JDialog {
             put(bitbucket.getHostName(), bitbucket);
         }};
 
-        _hostSelectBox.removeAllItems();
         fillHostSelectBox();
 
         Object selectedHost = _hostSelectBox.getSelectedItem();
@@ -103,9 +102,9 @@ public class AddHostDialog extends javax.swing.JDialog {
     }
 
     private void fillHostSelectBox() {
-        for (String host : _hosts.keySet()) {
-            _hostSelectBox.addItem(host);
-        }
+        _hostSelectBox.removeAllItems();
+
+        _hosts.keySet().stream().forEach((host) -> _hostSelectBox.addItem(host));
     }
 
     /**
