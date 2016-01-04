@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.Reader;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 
 /**
@@ -16,25 +17,21 @@ public class UserRepository {
     private final Gson _gsonProvider;
     private final String _dirName;
     private final String _filePrefix;
-//    private final FileReader _fileReader;
+    private final Reader _fileReader;
 
-    public UserRepository(Gson gsonProvider) {
+    public UserRepository(Gson gsonProvider, Reader fileReader) {
         this._gsonProvider = gsonProvider;
-//        this._fileReader = fileReader;
         this._dirName = System.getProperty("user.home") + "\\.GitRepoViewer\\";
         this._filePrefix = "User.json";
+        this._fileReader = fileReader;
     }
 
     public void setSelectedHost(String host) {
         this._selectedHost = host;
     }
 
-    public User getUser() throws FileNotFoundException {
-        try {
-            return this._gsonProvider.fromJson(new FileReader(this._dirName + this._selectedHost + this._filePrefix), User.class);
-        } catch (FileNotFoundException ex) {
-            throw new FileNotFoundException(ex.getMessage());
-        }
+    public User getUser() {
+        return this._gsonProvider.fromJson(this._fileReader, User.class);
     }
 
     public void saveUser(User user) throws Exception {
