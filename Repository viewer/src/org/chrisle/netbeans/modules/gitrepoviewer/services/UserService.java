@@ -20,12 +20,7 @@ public class UserService {
     }
 
     public User getUser() {
-        try {
-            return this._userRepo.getUser();
-        } catch (FileNotFoundException ex) {
-            Exceptions.printStackTrace(ex);
-            return null;
-        }
+        return this._userRepo.getUser();
     }
 
     public void saveUser(IHost host) {

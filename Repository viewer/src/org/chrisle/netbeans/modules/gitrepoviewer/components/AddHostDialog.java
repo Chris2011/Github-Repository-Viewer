@@ -89,7 +89,7 @@ public class AddHostDialog extends javax.swing.JDialog {
 
     private User getUserFromFile() {
         try {
-            UserRepository userRepo = new UserRepository(new Gson());
+            UserRepository userRepo = new UserRepository(new Gson(), new FileReader(System.getProperty("user.home") + "\\.GitRepoViewer\\" + this._selectedHost.getHostName() + "User.json"));
             userRepo.setSelectedHost(this._selectedHost.getHostName());
 
             return userRepo.getUser();
