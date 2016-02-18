@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Reader;
+import java.nio.file.FileAlreadyExistsException;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.junit.Before;
 import org.junit.Rule;
@@ -107,5 +108,21 @@ public class UserRepositoryTest {
         
         assertEquals(userName, result.getUserName());
         assertEquals(authToken, result.getAuthToken());
+    }
+
+    /**
+     * Test of saveUser method, of class UserRepository.
+     * @throws java.lang.Exception
+     */
+    @Test(expected = FileAlreadyExistsException.class)
+    public void testSaveUserFileExists() throws Exception {
+        System.out.println("saveUserFileExists");
+        
+        String userName = "ChrisTest";
+        String authToken = "te8t9se9tst7etzts8e";
+        User user = new User(userName, authToken);
+        
+        Mockito.when(this._gsonProvider.toJson(user)).thenReturn("{\"_userName\":\"" + userName + "\",\"_authToken\":\"" + authToken + "\"}");
+        _userRepo.saveUser(user);
     }
 }
