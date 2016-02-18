@@ -102,8 +102,6 @@ public class UserRepositoryTest {
         this._fileReader = new FileReader(testFolder.getRoot().getPath() + "\\" + tempFile.getName());
         this._userRepo = new UserRepository(this._gsonProvider, this._fileReader);
 
-//        this._userRepo.setSelectedHost(this._selectedHost);
-        
         Mockito.when(this._gsonProvider.fromJson(this._fileReader, User.class)).thenReturn(user);
         User result = this._userRepo.getUser();
         
