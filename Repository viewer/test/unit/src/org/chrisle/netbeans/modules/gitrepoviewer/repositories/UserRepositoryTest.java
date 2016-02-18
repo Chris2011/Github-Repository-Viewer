@@ -48,7 +48,6 @@ public class UserRepositoryTest {
         
         this._fileReader = new FileReader(testFolder.getRoot().getPath() + "\\" + tempFile.getName());
         this._userRepo = new UserRepository(this._gsonProvider, this._fileReader);
-
     }
 
     /**
@@ -59,6 +58,8 @@ public class UserRepositoryTest {
         System.out.println("getUser");
         
         String expResult = "ChrisLE";
+        
+        this._userRepo.setSelectedHost(this._selectedHost);
 
         Mockito.when(this._gsonProvider.fromJson(_fileReader, User.class)).thenReturn(new User("ChrisLE", "MyToken"));
         User result = this._userRepo.getUser();
@@ -79,17 +80,34 @@ public class UserRepositoryTest {
         User result = this._userRepo.getUser();
     }
 
-//    /**
-//     * Test of saveUser method, of class UserRepository.
-//     */
-//    @Test
-//    public void testSaveUser() throws Exception {
-//        System.out.println("saveUser");
-//        User user = null;
-//        UserRepository instance = new UserRepository();
-//        instance.saveUser(user);
-//        // TODO review the generated test code and remove the default call to fail.
-//        fail("The test case is a prototype.");
-//    }
-    
+    /**
+     * Test of saveUser method, of class UserRepository.
+     * @throws java.lang.Exception
+     */
+    @Test
+    public void testSaveUser() throws Exception {
+        System.out.println("saveUser");
+        
+        String userName = "ChrisTest";
+        String authToken = "te8t9se9tst7etzts8e";
+        User user = new User(userName, authToken);
+        
+        this._userRepo.setSelectedHost("Github2");
+        
+        Mockito.when(this._gsonProvider.toJson(user)).thenReturn("{\"_userName\":\"" + userName + "\",\"_authToken\":\"" + authToken + "\"}");
+        _userRepo.saveUser(user);
+        
+        File tempFile = testFolder.newFile(this._userRepo.getSelectedHost() + this._filePrefix);
+
+        this._fileReader = new FileReader(testFolder.getRoot().getPath() + "\\" + tempFile.getName());
+        this._userRepo = new UserRepository(this._gsonProvider, this._fileReader);
+
+//        this._userRepo.setSelectedHost(this._selectedHost);
+        
+        Mockito.when(this._gsonProvider.fromJson(this._fileReader, User.class)).thenReturn(user);
+        User result = this._userRepo.getUser();
+        
+        assertEquals(userName, result.getUserName());
+        assertEquals(authToken, result.getAuthToken());
+    }
 }

@@ -14,6 +14,7 @@ import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
  */
 public class UserRepository {
     private String _selectedHost;
+
     private final Gson _gsonProvider;
     private final String _dirName;
     private final String _filePrefix;
@@ -28,6 +29,10 @@ public class UserRepository {
 
     public void setSelectedHost(String host) {
         this._selectedHost = host;
+    }
+    
+    public String getSelectedHost() {
+        return _selectedHost;
     }
 
     public User getUser() {
