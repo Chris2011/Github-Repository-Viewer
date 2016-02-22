@@ -2,8 +2,6 @@ package org.chrisle.netbeans.modules.gitrepoviewer.repositories;
 
 import com.google.gson.Gson;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.Reader;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
@@ -43,7 +41,7 @@ public class UserRepository {
         String userJson = this._gsonProvider.toJson(user);
 
         try {
-            File dir = new File(_dirName);
+            File dir = new File(this._dirName);
             dir.mkdir();
 
             File file = new File(dir, this._selectedHost + this._filePrefix);
