@@ -43,13 +43,13 @@ public class UserRepositoryTest {
     public void setUp() throws Exception {
 //        MockitoAnnotations.initMocks(this);
         this._selectedHost = "Github";
-        this._dirName = System.getProperty("user.home") + "\\.GitRepoViewer\\";
         this._filePrefix = "User.json";
         
         File tempFile = testFolder.newFile(this._selectedHost + this._filePrefix);
         
+        this._dirName = testFolder.getRoot().getPath();
         this._fileReader = new FileReader(testFolder.getRoot().getPath() + "\\" + tempFile.getName());
-        this._userRepo = new UserRepository(this._gsonProvider, this._fileReader);
+        this._userRepo = new UserRepository(this._gsonProvider, this._fileReader, this._dirName);
     }
 
     /**
@@ -95,20 +95,21 @@ public class UserRepositoryTest {
         User user = new User(userName, authToken);
         
         this._userRepo.setSelectedHost("Github");
-        this._dirName = testFolder.getRoot().getPath();
+        
+        File tempFile = testFolder.newFile(this._userRepo.getSelectedHost() + this._filePrefix);
         
         Mockito.when(this._gsonProvider.toJson(user)).thenReturn("{\"_userName\":\"" + userName + "\",\"_authToken\":\"" + authToken + "\"}");
         _userRepo.saveUser(user);
+
+        System.out.println(testFolder.getRoot().getPath());
+
+        this._fileReader = new FileReader(testFolder.getRoot().getPath() + "\\" + tempFile.getName());
+        this._userRepo = new UserRepository(this._gsonProvider, this._fileReader, this._dirName);
+
+        Mockito.when(this._gsonProvider.fromJson(this._fileReader, User.class)).thenReturn(user);
+        User result = this._userRepo.getUser();
         
-//        File tempFile = testFolder.newFile(this._userRepo.getSelectedHost() + this._filePrefix);
-//
-//        this._fileReader = new FileReader(testFolder.getRoot().getPath() + "\\" + tempFile.getName());
-//        this._userRepo = new UserRepository(this._gsonProvider, this._fileReader);
-//
-//        Mockito.when(this._gsonProvider.fromJson(this._fileReader, User.class)).thenReturn(user);
-//        User result = this._userRepo.getUser();
-//        
-//        assertEquals(userName, result.getUserName());
-//        assertEquals(authToken, result.getAuthToken());
+        assertEquals(userName, result.getUserName());
+        assertEquals(authToken, result.getAuthToken());
     }
 }

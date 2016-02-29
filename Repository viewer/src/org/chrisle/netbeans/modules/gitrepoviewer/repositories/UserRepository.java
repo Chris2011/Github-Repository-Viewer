@@ -18,9 +18,9 @@ public class UserRepository {
     private final String _filePrefix;
     private final Reader _fileReader;
 
-    public UserRepository(Gson gsonProvider, Reader fileReader) {
+    public UserRepository(Gson gsonProvider, Reader fileReader, String dirName) {
         this._gsonProvider = gsonProvider;
-        this._dirName = System.getProperty("user.home") + "\\.GitRepoViewer\\";
+        this._dirName = dirName;
         this._filePrefix = "User.json";
         this._fileReader = fileReader;
     }
