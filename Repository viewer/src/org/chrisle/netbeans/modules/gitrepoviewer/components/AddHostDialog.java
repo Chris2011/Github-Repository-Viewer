@@ -6,6 +6,7 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.components;
 
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import org.chrisle.netbeans.modules.gitrepoviewer.repositories.UserRepository;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.BitbucketService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.GithubService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.IHostService;
+import org.openide.util.Exceptions;
 import org.openide.util.ImageUtilities;
 
 /**
@@ -88,17 +90,31 @@ public class AddHostDialog extends javax.swing.JDialog {
     }
 
     private User getUserFromFile() {
+        final String dirName = System.getProperty("user.home") + "\\.GitRepoViewer\\";
+        FileReader fileReader;
+        
         try {
-            UserRepository userRepo = new UserRepository(new Gson(), new FileReader(System.getProperty("user.home") + "\\.GitRepoViewer\\" + this._selectedHost.getHostName() + "User.json"), System.getProperty("user.home") + "\\.GitRepoViewer\\");
-            userRepo.setSelectedHost(this._selectedHost.getHostName());
-
-            return userRepo.getUser();
+            fileReader = new FileReader(dirName + this._selectedHost.getHostName() + "User.json");
+        } catch(FileNotFoundException ex) {
+            File dir = new File(dirName);
+            dir.mkdir();
+            
+//            fileWriter
         } catch (Exception ex) {
+            Exceptions.printStackTrace(ex);
             _errorDialog.setErrorMessage(ex.getMessage());
             _errorDialog.setVisible(true);
         }
-
+        
         return null;
+//        return getUser(fileReader, dirName);
+    }
+
+    private User getUser(FileReader fileReader, final String dirName) {
+        UserRepository userRepo = new UserRepository(new Gson(), fileReader, dirName);
+        userRepo.setSelectedHost(this._selectedHost.getHostName());
+        
+        return userRepo.getUser();
     }
 
     private void fillHostSelectBox() {

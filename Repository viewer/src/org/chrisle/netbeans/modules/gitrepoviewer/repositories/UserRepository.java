@@ -17,6 +17,7 @@ public class UserRepository {
     private final String _dirName;
     private final String _filePrefix;
     private final Reader _fileReader;
+    private File _dir;
 
     public UserRepository(Gson gsonProvider, Reader fileReader, String dirName) {
         this._gsonProvider = gsonProvider;
@@ -41,12 +42,12 @@ public class UserRepository {
         String userJson = this._gsonProvider.toJson(user);
 
         try {
-            File dir = new File(this._dirName);
-            dir.mkdir();
-
-            File file = new File(dir, this._selectedHost + this._filePrefix);
+            File file = new File(_dir, this._selectedHost + this._filePrefix);
             FileWriter fileWriter = new FileWriter(file);
 
+//            _dir = new File(this._dirName);
+//            _dir.mkdir();
+            
             fileWriter.write(userJson);
             fileWriter.close();
         } catch(Exception e) {
