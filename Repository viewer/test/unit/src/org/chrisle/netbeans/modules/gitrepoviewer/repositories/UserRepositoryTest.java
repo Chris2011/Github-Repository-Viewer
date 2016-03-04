@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
-import java.nio.file.FileAlreadyExistsException;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,6 +17,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import static org.junit.Assert.assertEquals;
+import org.junit.Ignore;
 
 /**
  *
@@ -44,23 +45,23 @@ public class UserRepositoryTest {
 //        MockitoAnnotations.initMocks(this);
         this._selectedHost = "Github";
         this._filePrefix = "User.json";
+    }
+
+    /**
+     * Test of getUser method, of class UserRepository.
+     * @throws java.io.IOException
+     */
+//    @Ignore
+    @Test
+    public void testGetUser() throws IOException {
+        System.out.println("getUser");
         
+        String expResult = "ChrisLE";
         File tempFile = testFolder.newFile(this._selectedHost + this._filePrefix);
         
         this._dirName = testFolder.getRoot().getPath();
         this._fileReader = new FileReader(testFolder.getRoot().getPath() + "\\" + tempFile.getName());
         this._userRepo = new UserRepository(this._gsonProvider, this._fileReader, this._dirName);
-    }
-
-    /**
-     * Test of getUser method, of class UserRepository.
-     */
-    @Test
-    public void testGetUser() {
-        System.out.println("getUser");
-        
-        String expResult = "ChrisLE";
-        
         this._userRepo.setSelectedHost(this._selectedHost);
 
         Mockito.when(this._gsonProvider.fromJson(_fileReader, User.class)).thenReturn(new User("ChrisLE", "MyToken"));
@@ -88,25 +89,29 @@ public class UserRepositoryTest {
      */
     @Test
     public void testSaveUser() throws Exception {
+        // Save user:
         System.out.println("saveUser");
         
         String userName = "ChrisTest";
-        String authToken = "te8t9se9tst7etzts8e";
+        String authToken = "te8t9se9tst7etzts8";
         User user = new User(userName, authToken);
+        File tempFile = testFolder.newFile(this._selectedHost + this._filePrefix);
         
+        this._dirName = testFolder.getRoot().getPath();
+        this._fileReader = new FileReader(testFolder.getRoot().getPath() + "\\" + tempFile.getName());
+        this._userRepo = new UserRepository(this._gsonProvider, this._fileReader, this._dirName);
         this._userRepo.setSelectedHost("Github");
-        
-        File tempFile = testFolder.newFile(this._userRepo.getSelectedHost() + this._filePrefix);
-        
+                
         Mockito.when(this._gsonProvider.toJson(user)).thenReturn("{\"_userName\":\"" + userName + "\",\"_authToken\":\"" + authToken + "\"}");
         _userRepo.saveUser(user);
 
-        System.out.println(testFolder.getRoot().getPath());
-
-        this._fileReader = new FileReader(testFolder.getRoot().getPath() + "\\" + tempFile.getName());
+        
+        // Get user:
         this._userRepo = new UserRepository(this._gsonProvider, this._fileReader, this._dirName);
+        
+        User newUser = new User("ChrisTest", "te8t9se9tst7etzts8");
 
-        Mockito.when(this._gsonProvider.fromJson(this._fileReader, User.class)).thenReturn(user);
+        Mockito.when(this._gsonProvider.fromJson(this._fileReader, User.class)).thenReturn(newUser);
         User result = this._userRepo.getUser();
         
         assertEquals(userName, result.getUserName());
