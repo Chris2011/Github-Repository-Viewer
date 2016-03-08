@@ -35,7 +35,11 @@ public class UserRepository {
     }
 
     public User getUser() {
-        return this._gsonProvider.fromJson(this._fileReader, User.class);
+        if (this._fileReader != null) {
+            return this._gsonProvider.fromJson(this._fileReader, User.class);
+        }
+        
+        return new User("", "");
     }
 
     public void saveUser(User user) throws Exception {
