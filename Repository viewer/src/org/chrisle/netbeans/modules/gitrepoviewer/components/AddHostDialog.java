@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.chrisle.netbeans.modules.gitrepoviewer.components;
 
 import com.google.gson.Gson;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
@@ -22,7 +16,6 @@ import org.chrisle.netbeans.modules.gitrepoviewer.repositories.UserRepository;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.BitbucketService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.GithubService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.IHostService;
-import org.openide.util.Exceptions;
 import org.openide.util.ImageUtilities;
 
 /**
@@ -96,18 +89,10 @@ public class AddHostDialog extends javax.swing.JDialog {
         try {
             fileReader = new FileReader(dirName + this._selectedHost.getHostName() + "User.json");
         } catch(FileNotFoundException ex) {
-            File dir = new File(dirName);
-            dir.mkdir();
-            
-//            fileWriter
-        } catch (Exception ex) {
-            Exceptions.printStackTrace(ex);
-            _errorDialog.setErrorMessage(ex.getMessage());
-            _errorDialog.setVisible(true);
+            fileReader = null;
         }
-        
-        return null;
-//        return getUser(fileReader, dirName);
+
+        return getUser(fileReader, dirName);
     }
 
     private User getUser(FileReader fileReader, final String dirName) {
