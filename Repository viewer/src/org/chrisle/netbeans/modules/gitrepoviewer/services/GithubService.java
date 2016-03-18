@@ -77,7 +77,7 @@ public class GithubService extends HostService<Github> {
 
     @Override
     public List<String> getTags() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
 //    @Override

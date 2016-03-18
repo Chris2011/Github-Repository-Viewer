@@ -24,12 +24,14 @@ public class HostService<T> implements IHostService<IHost> {
 
     @Override
     public List<RepositoryBranch> getBranches(IRepositoryIdProvider repositoryId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO: Will be overwritten.
+        return null;
     }
 
     @Override
     public List<String> getTags() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // TODO: Will be overwritten.
+        return null;
     }
 
     @Override
@@ -60,6 +62,6 @@ public class HostService<T> implements IHostService<IHost> {
 
     @Override
     public void saveHost(IHost host) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 }

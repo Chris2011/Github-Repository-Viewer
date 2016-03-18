@@ -16,6 +16,7 @@ import org.chrisle.netbeans.modules.gitrepoviewer.repositories.UserRepository;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.BitbucketService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.GithubService;
 import org.chrisle.netbeans.modules.gitrepoviewer.services.IHostService;
+import org.chrisle.netbeans.modules.gitrepoviewer.services.UserService;
 import org.openide.util.ImageUtilities;
 
 /**
@@ -25,9 +26,12 @@ import org.openide.util.ImageUtilities;
 public class AddHostDialog extends javax.swing.JDialog {
     private final Map<String, IHost> _hosts;
     private final IHostService<IHost> _hostService;
+    private UserService _userService = null;
     private final IHost _selectedHost;
     private final User _userCredentials;
     private final ErrorDialog _errorDialog;
+    private final String _dirName;
+    private FileReader _fileReader = null;
 
     /**
      * Creates new form HostsDialog
@@ -35,6 +39,8 @@ public class AddHostDialog extends javax.swing.JDialog {
     public AddHostDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        _dirName = System.getProperty("user.home") + "\\.GitRepoViewer\\";
 
         _errorDialog = new ErrorDialog(null, true);
         _hosts = new HashMap<String, IHost>() {{
@@ -83,23 +89,17 @@ public class AddHostDialog extends javax.swing.JDialog {
     }
 
     private User getUserFromFile() {
-        final String dirName = System.getProperty("user.home") + "\\.GitRepoViewer\\";
-        FileReader fileReader;
-        
         try {
-            fileReader = new FileReader(dirName + this._selectedHost.getHostName() + "User.json");
+            _fileReader = new FileReader(_dirName + this._selectedHost.getHostName() + "User.json");
         } catch(FileNotFoundException ex) {
-            fileReader = null;
+            _fileReader = null;
         }
 
-        return getUser(fileReader, dirName);
+        return getUser();
     }
 
-    private User getUser(FileReader fileReader, final String dirName) {
-        UserRepository userRepo = new UserRepository(new Gson(), fileReader, dirName);
-        userRepo.setSelectedHost(this._selectedHost.getHostName());
-        
-        return userRepo.getUser();
+    private User getUser() {
+        return _userService.getUser();
     }
 
     private void fillHostSelectBox() {
@@ -271,7 +271,8 @@ public class AddHostDialog extends javax.swing.JDialog {
     private void addHostBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addHostBtnActionPerformed
         if (!_username.getText().isEmpty() && !_authToken.getText().isEmpty()) {
             try {
-//                _hostService.saveUser(_selectedHost);
+                _userService = new UserService(new User(_username.getText(), _authToken.getText()), new UserRepository(new Gson(), _fileReader, _dirName));
+                _userService.saveUser(_selectedHost);
                 List<IRepository> repositoriesFromHost = getRepositoriesFromHost();
                 _selectedHost.setRepositories(repositoriesFromHost);
 

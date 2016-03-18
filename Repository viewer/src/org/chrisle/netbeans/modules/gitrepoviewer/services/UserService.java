@@ -1,6 +1,5 @@
 package org.chrisle.netbeans.modules.gitrepoviewer.services;
 
-import java.io.FileNotFoundException;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.IHost;
 import org.chrisle.netbeans.modules.gitrepoviewer.beans.User;
 import org.chrisle.netbeans.modules.gitrepoviewer.repositories.UserRepository;
